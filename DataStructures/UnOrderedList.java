@@ -19,7 +19,7 @@ public class UnOrderedList {
 		System.out.println("Enter the element to search");
 		String search=Utility.inputString();
 		list=Utility.searchInList(list, search);
-		//Utility.readListWriteInFile("/home/bridgeit/workspace/Files/LinklistWord",list);
+		Utility.readListWriteInFile("/home/bridgeit/workspace/Files/LinklistWord",list);
 	}
 
 }

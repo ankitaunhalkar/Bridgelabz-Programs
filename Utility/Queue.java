@@ -72,8 +72,8 @@ void display()
 		}
 	}
 }
-/*public static void main(String a[]){
-    
+public static void main(String a[])
+{ 
     Queue queue = new Queue();
     queue.enqueue(4);
     queue.dequeue();
@@ -89,6 +89,7 @@ void display()
     queue.enqueue(23);
     queue.enqueue(435);
     queue.dequeue();
-    
-}*/
+    queue.display();
+    //System.out.println(queue.size());
+}
 }

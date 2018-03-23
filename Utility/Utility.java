@@ -188,10 +188,10 @@ public  class Utility {
 		if(n>=0 && n<31)
 		{
 			int p=1;
-			for(int i=1;i<=n;i++)
+			for(int i=0;i<=n;i++)
 			{
-				p=2*p;
 				System.out.println("2^"+i+"="+p);
+				p=2*p;
 			}
 		}
 		
@@ -682,30 +682,29 @@ public  class Utility {
 	}
 
 //Find Your Number
-	public static void search(int first, int last) {
+	public static void search(int first,int last) {
+		int limit=(int) (Math.pow(2, 4)-1);
 		int mid;
 		mid=first+last/2;		
-		while(first<last)
-		{
-			
-			System.out.println("Is your number between "+first+ " & "+mid);
-			System.out.println("Yes or No?");
-			if(inputString()=="yes")
+			if(first<limit)
 			{
-				mid=(first+mid)/2;
-				System.out.println(mid);
-				
-			}
-			else
-			{
-				
-				mid=((mid+1)+last)/2;
-				System.out.println(mid);
-			}
 			
-		}
+				System.out.println("Is your number between "+first+ " & "+mid);
+				System.out.println("Yes or No?");
+				String choice=inputString();
+				if(choice.equals("yes"))
+				{
+					search(first,mid);
+					System.out.println(mid);
+				}
+				else if(choice.equals("no"))
+				{	
+					search(mid+1,last);
+				}
+			}
+		System.out.println(mid);
 	}
-
+	
 //Binary Search Word List
 	public static void findWord(FileReader file) 
 	{
@@ -1034,18 +1033,34 @@ public  class Utility {
 	}
 
 //Method for Banking counter
-	public static void bankCounter(int choice) 
+	public static void bankCounter() 
 	{
+		for(int i=0;i<50;i++)
+		{
+		System.out.println("Enter Your Choice:");
+		System.out.println("1.Deposit\n2.Withdraw\n3.Balance Amount\n4.Number Of People in queue");
+		int choice=Utility.inputInt();
 		Queue q=new Queue();
 		switch(choice)
 		{
 		case 1: System.out.println("Enter the amount to Deposit:");
 			    int amountdepo=inputInt();
 			    q.enqueue(amountdepo);
+			    q.display();
 			    break;
 		case 2: System.out.println("Enter the amount to Withdraw:");
 		 		int amountwith=inputInt();
 		 		q.dequeue();
+		 		q.display();
+		 		break;
+		case 3: System.out.println("Balance Amount");
+				q.display();
+				break;
+		case 4: System.out.println("Number of people");
+				int size=q.size();
+				System.out.println(size);
+		default: break;
+		}
 		}
 	}
 }

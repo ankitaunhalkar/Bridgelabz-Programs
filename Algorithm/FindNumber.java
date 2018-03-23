@@ -12,7 +12,7 @@ public class FindNumber {
 		System.out.println("Enter the Nth value:");
 		int n=Utility.inputInt();
 		System.out.println("Think of a number between 0-"+(n-1));
-		Utility.search(0,n-1);
+		Utility.search(0,n);
 	
 	}
 

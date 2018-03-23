@@ -23,7 +23,7 @@ public class SortAndSearch {
 		System.out.println("Enter the value to find:");
 		String search=Utility.inputString();
 		Utility.BinarySearch(array, search);
-		end=Utility.time();
+		end=Utility.time ();
 		Utility.stopWatch(start, end);
 		System.out.println("-----------------");
 		
