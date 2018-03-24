@@ -16,7 +16,8 @@ public class DayOfWeek {
 		int d=Utility.inputInt();
 		System.out.println("Year:");
 		int y=Utility.inputInt();
-		Utility.dayOfWeek(m,d,y);
+		int day=Utility.dayOfWeek(m,d,y);
+		System.out.println(day);
 	}
 
 }

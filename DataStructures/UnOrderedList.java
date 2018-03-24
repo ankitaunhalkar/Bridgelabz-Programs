@@ -14,12 +14,12 @@ public class UnOrderedList {
 	public static <N> void main(String[] args) 
 	{
 		new Utility();
-		LinkedList<N> list;
-		list=Utility.readFileAndAddInList("/home/bridgeit/workspace/Files/LinklistWord");
+		LinkedList<String> list;
+		String file="/home/bridgeit/workspace/Files/LinklistWord";
+		list=Utility.readFileAndAddInList(file);
 		System.out.println("Enter the element to search");
 		String search=Utility.inputString();
 		list=Utility.searchInList(list, search);
-		Utility.readListWriteInFile("/home/bridgeit/workspace/Files/LinklistWord",list);
+		Utility.readListWriteInFile(file,list);
 	}
-
 }

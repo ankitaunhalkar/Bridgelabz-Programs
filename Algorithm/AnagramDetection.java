@@ -8,9 +8,9 @@ public class AnagramDetection {
 	{	
 		new Utility();
 		System.out.println("Enter String 1:");
-		String str1=Utility.inputString();
+		String str1=Utility.inputStringLine().toLowerCase().replaceAll("\\s", "");
 		System.out.println("Enter String 2:");
-		String str2=Utility.inputString();
+		String str2=Utility.inputStringLine().toLowerCase().replaceAll("\\s", "");
 		Utility.anagram(str1, str2);
 	}
 

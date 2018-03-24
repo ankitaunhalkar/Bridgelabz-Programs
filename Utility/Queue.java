@@ -6,7 +6,8 @@ int queue[];
 int rear;
 int front;
 int capacity;
-public Queue() {
+public Queue() 
+{
 	capacity=20;
 	size=0;
 	queue=new int[capacity];
@@ -29,7 +30,7 @@ void enqueue(int item)
 		{
 			queue[++rear]=item;
 		}
-		System.out.println("Inserted into queue:"+item);
+		System.out.println("You are Inserted into queue");
 		size++;
 	}
 }
@@ -41,7 +42,7 @@ void dequeue()
 	}
 	else
 	{
-		System.out.println("Poped from queue:"+queue[front++]);
+		System.out.println("You are Poped from queue:"+queue[front++]);
 	}
 	size--;
 }
@@ -72,7 +73,7 @@ void display()
 		}
 	}
 }
-public static void main(String a[])
+/*public static void main(String a[])
 { 
     Queue queue = new Queue();
     queue.enqueue(4);
@@ -91,5 +92,5 @@ public static void main(String a[])
     queue.dequeue();
     queue.display();
     //System.out.println(queue.size());
-}
+}*/
 }

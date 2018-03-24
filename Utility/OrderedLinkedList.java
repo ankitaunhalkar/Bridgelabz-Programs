@@ -2,18 +2,18 @@ package com.bridgelabz.Utility;
 
 public class OrderedLinkedList<N extends Comparable<N>>
 {
-	Nodee<N> head=null;
-	Nodee<N> tail=null;
+	Node1<N> head;
+	Node1<N> tail;
 	int size;
-	static class Nodee<N>
+	static class Node1<N>
 	{
 		N data;
-		Nodee<N> next;
-		public Nodee() {
+		Node1<N> next;
+		public Node1() {
 			this.data=null;
 			this.next=null;
 		}
-		Nodee(N data)
+		Node1(N data)
 		{
 			this.data=data;
 			this.next=null;
@@ -21,27 +21,64 @@ public class OrderedLinkedList<N extends Comparable<N>>
 	}
 	public void add(N item)
 	{
-		Nodee<N> newnode=new Nodee<N>(item);
-		Nodee<N> end=head;
+		Node1<N> newnode=new Node1<N>(item);
+        Node1<N> curr, prev = null;
+        boolean ins = false;
+        if (head == null)
+           head = newnode;
+        else if (item.compareTo( head.data)<=0)
+        {
+            newnode.next=head;
+            head = newnode;
+        }
+        else
+        {
+            prev = head;
+            curr = head.next;
+            while(curr != null)
+            {
+                if (item.compareTo(prev.data) >= 0 && item.compareTo(curr.data)<=0)
+                {
+                    prev.next=newnode;
+                    newnode.next=curr;
+                    ins = true;
+                    break;
+                }
+                else
+                {
+                    prev = curr;
+                    curr = curr.next;
+                }
+            }
+            if (ins == false)
+            {
+                prev.next=newnode;
+            }
+        }
+        size++;
+		/*Node1<N> end=head;
 		if(head==null)
 		{
-			newnode=head;
+			head=newnode;
 			end=head;
+			System.out.println(item);
 		}
 		else if(head.data.compareTo(item)>0)
 		{
 			newnode.next=head;
 			head=newnode;
+			System.out.println(item);
 		}
 		else if(end.data.compareTo(item)<0)
 		{
 			end.next=newnode;
 			newnode=end;
+			System.out.println(item);
 		}
 		else
 		{
-			Nodee<N> tempPrev=head;
-			Nodee<N> tempCurr=head.next;
+			Node1<N> tempPrev=head;
+			Node1<N> tempCurr=head.next;
 			while((tempCurr!=end) && (tempCurr.data.compareTo(item)<0))
 			{
 				tempPrev=tempCurr;
@@ -49,8 +86,9 @@ public class OrderedLinkedList<N extends Comparable<N>>
 			}
 			tempPrev.next=newnode;
 			newnode=tempCurr;
+			System.out.println(item);
 		}
-		size++;
+		size++;*/
 	}
 	public void remove(N item) 
 	{
@@ -60,7 +98,7 @@ public class OrderedLinkedList<N extends Comparable<N>>
 		}
 		else
 		{
-			Nodee<N> temp=head;
+			Node1<N> temp=head;
 			if(temp.data==item)
 			{
 				head=temp.next;
@@ -79,7 +117,7 @@ public class OrderedLinkedList<N extends Comparable<N>>
 	}
 	public void search(N item) 
 	{
-		Nodee<N> temp=head;
+		Node1<N> temp=head;
 		boolean status=false;
 			while(temp.next!=null)
 			{
@@ -91,7 +129,7 @@ public class OrderedLinkedList<N extends Comparable<N>>
 				}	
 				temp=temp.next;
 			}
-			if(temp.data.equals(item))
+			if(temp.data==item)
 				status=true;
 			if(status==true)
 			{
@@ -111,7 +149,7 @@ public class OrderedLinkedList<N extends Comparable<N>>
 		{
 			return 0;
 		}
-		Nodee<N> cur=head;
+		Node1<N> cur=head;
 		while(cur!=null)
 		{
 			count++;
@@ -134,7 +172,7 @@ public class OrderedLinkedList<N extends Comparable<N>>
 	}
 	public void index(N item)
 	{
-		Nodee<N> temp=head;
+		Node1<N> temp=head;
 		int ind=0;
 			while(temp!=null)
 			{
@@ -157,7 +195,7 @@ public class OrderedLinkedList<N extends Comparable<N>>
 		}
 		else
 		{
-			Nodee<N> newnode= new Nodee<N>(item);
+			Node1<N> newnode= new Node1<N>(item);
 			
 			if(pos==1)
 			{
@@ -166,14 +204,14 @@ public class OrderedLinkedList<N extends Comparable<N>>
 			}
 			else
 			{
-				Nodee<N> previous=head;
+				Node1<N> previous=head;
 				int count=1;
 				while (count<pos-1)
 				{
 					previous=previous.next;
 					count++;
 				}
-				Nodee<N> current=previous.next;
+				Node1<N> current=previous.next;
 				newnode.next=current;
 				previous.next=newnode;
 			}
@@ -188,8 +226,8 @@ public class OrderedLinkedList<N extends Comparable<N>>
 		}
 		else
 		{
-			Nodee<N> curr=head;
-			Nodee<N> prev=null;
+			Node1<N> curr=head;
+			Node1<N> prev=null;
 			while(curr.next!=null)
 			{
 				prev=curr;
@@ -207,32 +245,47 @@ public class OrderedLinkedList<N extends Comparable<N>>
 		}
 		if(pos==1)
 		{
-			Nodee<N> temp=head;
+			Node1<N> temp=head;
 			head=head.next;
 			temp.next=null;
 		}
 		else
 		{
-			Nodee<N> previous=head;
+			Node1<N> previous=head;
 			int count=1;
 			while(count<pos-1)
 			{
 				previous=previous.next;
 				count++;
 			}
-			Nodee<N> current=previous.next;
+			Node1<N> current=previous.next;
 			previous.next=current.next;
 			current.next=null;
 		}
 	}
-	public void display() 
-	{
-		Nodee<N> temp=head;
-		while(temp.next!=null)
-		{
-			System.out.println(temp.data);
-			temp=temp.next;
-		}
-		System.out.println(temp.data);
+	void printList()
+    {
+        Node1<N> temp = head;
+        while (temp != null)
+        {
+           System.out.print(temp.data+" ");
+           temp = temp.next;
+        }
+    }
+	public static void main(String[] args) {
+		OrderedLinkedList<Integer> list= new OrderedLinkedList<Integer>();
+		list.add(8);
+		list.add(5);
+		list.add(9);
+		list.search(5);
+		list.append(10);
+		list.printList();
+		//list.index(9);
+		//list.insertAt(2, 12);
+		//list.pop();
+		//list.pop(1);
+		//list.printList();
+		
+	
 	}
 }
