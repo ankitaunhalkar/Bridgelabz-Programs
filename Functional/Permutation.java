@@ -8,7 +8,8 @@ public class Permutation {
 		new Utility();
 		System.out.println("Enter the String:");
 		String s=Utility.inputString();
-		Utility.permute(s);
+		int n=s.length();
+		Utility.permute(s,0,n-1);
 	}
 
 }

@@ -26,7 +26,7 @@ public class OrderedLinkedList<N extends Comparable<N>>
         boolean ins = false;
         if (head == null)
            head = newnode;
-        else if (item.compareTo( head.data)<=0)
+        else if (item.compareTo(head.data)<=0)
         {
             newnode.next=head;
             head = newnode;
@@ -273,7 +273,7 @@ public class OrderedLinkedList<N extends Comparable<N>>
         }
     }
 	public static void main(String[] args) {
-		OrderedLinkedList<Integer> list= new OrderedLinkedList<Integer>();
+	/*	OrderedLinkedList<Integer> list= new OrderedLinkedList<Integer>();
 		list.add(8);
 		list.add(5);
 		list.add(9);
@@ -285,7 +285,7 @@ public class OrderedLinkedList<N extends Comparable<N>>
 		//list.pop();
 		//list.pop(1);
 		//list.printList();
-		
+*/		
 	
 	}
 }

@@ -49,6 +49,11 @@ public  class Utility {
 			return s.nextDouble();
 		
 	}
+//To return Boolean input;
+	public static boolean inputBoolean() 
+	{
+	return s.nextBoolean();	
+	}
 //To accept Array of int
 	public static Integer[] ArrayInt(int n)
 	{
@@ -315,7 +320,7 @@ public  class Utility {
 	}
 	
 //Printing Array 
-	private static <P> void ArrayPrint( P[][] array) 
+	public static <P> void ArrayPrint( P[][] array) 
 	{
 		
 		for(int i=0;i<array.length;i++)
@@ -359,24 +364,29 @@ public  class Utility {
 	}
 	
 //Method for String Permutation
-	public static void permute(String str) 
+	public static void permute(String str,int l,int r) 
 	{
-		char s[]=str.toCharArray();
-		Arrays.sort(s);
-		for(int i=0;i<s.length;i++)
-		{
-			 if(s[i]<s[i+1])
-			 {
-				 swap(s[i],s[i+1]);
-			 }
-		}
+		 if (l == r)
+	            System.out.println(str);
+	        else
+	        {
+	            for (int i = l; i <= r; i++)
+	            {
+	                str = swap(str,l,i);
+	                permute(str, l+1, r);
+	                str = swap(str,l,i);
+	            }
+	        }
 	}
 //swap
-	private static void swap(char c, char d) 
+	public static String swap(String str, int i,int j) 
 	{
-		char temp=c;
-		c=d;
-		d=temp;		
+			char charArray[]=str.toCharArray();
+			char temp = charArray[i] ;
+	        charArray[i] = charArray[j];
+	        charArray[j] = temp;
+	        return String.valueOf(charArray);
+			
 	}
 	
 //Method for StopWatch
@@ -464,8 +474,8 @@ public  class Utility {
 			}
 			if(count==2)
 			{
-				/*System.out.print(num);
-				System.out.print(" ");*/
+				//System.out.print(num);
+				//System.out.print("");
 				output[k++]=num;
 				//len++;
 			}
@@ -685,28 +695,27 @@ public  class Utility {
 	}
 
 //Find Your Number
-	public static void search(int first,int last) {
-		int limit=(int) (Math.pow(2, 4)-1);
-		int mid;
-		mid=first+last/2;		
-			if(first<limit)
+	public static int search(int low,int high) {
+		if(low>high)
+		{
+			return -1;
+		}
+		else if(low==high)
+		{
+			return low;
+		}
+			int mid=(low+high)/2;
+			System.out.println("Is you number between "+low+ " and "+mid);
+			boolean flag=true;
+			if(flag != Utility.inputBoolean() )
 			{
-			
-				System.out.println("Is your number between "+first+ " & "+mid);
-				System.out.println("Yes or No?");
-				String choice=inputString();
-				if(choice.equals("yes"))
-				{
-					search(first,mid);
-					
-				}
-				else if(choice.equals("no"))
-				{	
-					search(mid+1,last);
-				}
+				low=mid+1;
 			}
 			else
-		System.out.println(mid);
+			{
+				high=mid;
+			}
+		return search(low,high);
 	}
 	
 //Binary Search Word List
@@ -724,15 +733,12 @@ public  class Utility {
 				System.out.println(array[i]);
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println("Enter the word to search:");
 		String search=Utility.inputString();
 		Utility.BinarySearch(array, search);
 	}
-
-//Method for Merge Sort
 
 
 //Method to find day of a week
@@ -992,10 +998,9 @@ public  class Utility {
 			for (int i = 0; i < array.length; i++) 
 			{
 				System.out.println(array[i]);
-				//System.out.println(array[i]);
 				list.add(array[i]);
 			}
-	//	list.display();
+		list.printList();
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
@@ -1015,7 +1020,7 @@ public  class Utility {
 			str=str+" "+temp.data;
 			temp=temp.next;
 		}
-			System.out.println(str);
+			//System.out.println(str);
 			bw.write(str);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -1112,6 +1117,7 @@ public  class Utility {
 						q.dequeue();
 						break;
 				case 3: System.out.println("Balance is:"+sum);
+						q.dequeue();
 						break;
 				case 4: q.enqueue(1);
 						break;
@@ -1170,5 +1176,62 @@ public  class Utility {
             if (((i + d) % 7 == 0) || (i == days[month-1])) 
             	System.out.println();
         } 
-    }	
+    }
+
+//Method for Binary search Tree
+	public static int findBTS(int num) 
+	{
+		//(2n)!/(n+1)!*n! 
+		//2nCn
+		int n=2*num;//2n
+		int k=num;//n
+		int value=1;
+		int result=0;
+		 // [n*(n-1)*---*(n-k+1)] / [k*(k-1)*---*1]
+			for(int i=0;i<k;i++)
+			{
+				value*=(n-i);
+				value/=(i+1);
+			}
+			
+		// return 2nCn/(n+1)
+		result=value/(num+1);
+		return result;
+	}
+
+//Method for CalendarQueue
+	public static void CalendarQueue(int m,int y) {
+		QueueLinkList month=new QueueLinkList();
+		QueueLinkList day=new QueueLinkList();
+		String[] months={"Jan","Feb","Mar","Apr","May","Jun","Jul","Sept","Oct","Nov","Dec"};
+		int[] days={31,28,31,30,31,30,31,31,30,31,30,31};
+		for(int i=0;i<months.length;i++)
+		{
+			month.insert(months[i]);
+		}
+		for(int i=0;i<days.length;i++)
+		{
+			day.insert(days[i]);
+		}
+		month.display();
+		if ((m == 2) && (isLeapOrNot(y))) 
+	    {
+	      	days[m] = 29;
+	    }
+		System.out.println("   " + months[m] + " " + y);
+        System.out.println(" S  M Tu  W Th  F  St");
+        int d = dayOfWeek(m, 1, y);
+        
+        for (int i = 0; i < d; i++)
+        {
+            System.out.print("   ");
+        }
+        
+        for (int i = 1; i <= days[m]; i++)
+        {
+            System.out.printf("%2d ", i);
+            if (((i + d) % 7 == 0) || (i == days[m])) 
+            	System.out.println();
+        } 
+	}	
 }

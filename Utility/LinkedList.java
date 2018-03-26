@@ -37,7 +37,7 @@ public class LinkedList<N> {
 			{
 				temp=temp.next;
 			}
-			temp.next=newnode;
+			//temp.next=newnode;
 			tail.next=newnode;
 			tail=newnode;
 		}
@@ -227,8 +227,8 @@ public class LinkedList<N> {
 		}
 		System.out.println(temp.data);
 	}
-	public static void main(String[] args) {
-		/*LinkedList list= new LinkedList();
+/*	public static void main(String[] args) {
+		LinkedList list= new LinkedList();
 		list.add(5);
 		list.add(9);
 		list.add(8);
@@ -238,8 +238,8 @@ public class LinkedList<N> {
 		list.insertAt(2, 12);
 		list.pop();
 		list.pop(1);
-		list.display();*/
+		list.display();
 		
 	
-	}
+	}*/
 }
