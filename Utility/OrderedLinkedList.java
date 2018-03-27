@@ -56,39 +56,6 @@ public class OrderedLinkedList<N extends Comparable<N>>
             }
         }
         size++;
-		/*Node1<N> end=head;
-		if(head==null)
-		{
-			head=newnode;
-			end=head;
-			System.out.println(item);
-		}
-		else if(head.data.compareTo(item)>0)
-		{
-			newnode.next=head;
-			head=newnode;
-			System.out.println(item);
-		}
-		else if(end.data.compareTo(item)<0)
-		{
-			end.next=newnode;
-			newnode=end;
-			System.out.println(item);
-		}
-		else
-		{
-			Node1<N> tempPrev=head;
-			Node1<N> tempCurr=head.next;
-			while((tempCurr!=end) && (tempCurr.data.compareTo(item)<0))
-			{
-				tempPrev=tempCurr;
-				tempCurr=tempCurr.next;
-			}
-			tempPrev.next=newnode;
-			newnode=tempCurr;
-			System.out.println(item);
-		}
-		size++;*/
 	}
 	public void remove(N item) 
 	{

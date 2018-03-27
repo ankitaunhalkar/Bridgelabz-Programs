@@ -55,9 +55,10 @@ public class QueueLinkList {
 			Node2 temp=front;
 			while(temp!=null)
 			{
-				System.out.println(temp.getData());
+				System.out.print(temp.getData()+" ");
 				temp=temp.getLinknext();
 			}
+			System.out.println();
 		}
 	}
 	public static void main(String[] args) {

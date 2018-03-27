@@ -40,14 +40,14 @@ void display()
 {
 	if(isEmpty())
 	{
-		System.out.println("Stack is empty");
+		//System.out.println("Stack is empty");
 	}
 	else
 	{
 		Node3 temp=top;
 		while(temp!=null)
 		{
-			System.out.println(temp.data);
+			System.out.print(temp.data+" ");
 			temp=temp.linkNext;
 		}
 	}

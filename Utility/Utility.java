@@ -6,8 +6,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.Scanner;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import com.bridgelabz.Utility.LinkedList.Node;
 import com.bridgelabz.Utility.OrderedLinkedList.Node1;
 
@@ -54,6 +62,7 @@ public  class Utility {
 	{
 	return s.nextBoolean();	
 	}
+
 //To accept Array of int
 	public static Integer[] ArrayInt(int n)
 	{
@@ -64,7 +73,6 @@ public  class Utility {
 		}
 		return a;
 	}
-
 //To acccept Generic Array
 	public static String[] ArrayString(int n)
 	{
@@ -83,7 +91,7 @@ public  class Utility {
 		try {
 			f = new FileReader(string);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		}
 		return f;	
@@ -99,7 +107,7 @@ public  class Utility {
 		} 
 		catch (IOException e) 
 		{
-			// TODO Auto-generated catch block
+			//
 			e.printStackTrace();
 		}
 		return f;	
@@ -968,7 +976,6 @@ public  class Utility {
 			System.out.println(str);
 			bw.write(str);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -1130,7 +1137,7 @@ public  class Utility {
 		}
 	}
 //Method to deposit
-	static double bankDeposit(double amount,double sum)
+	public static double bankDeposit(double amount,double sum)
 	{
 		System.out.println("Amount deposited is:"+amount);
 		sum=sum+amount;
@@ -1139,7 +1146,7 @@ public  class Utility {
 	}
 	
 //Method to withdraw
-	static double bankWithdraw(double amount,double sum)
+	public static double bankWithdraw(double amount,double sum)
 	{
 		System.out.println("Amount withdrawn is:"+amount);
 		sum=sum-amount;
@@ -1200,38 +1207,222 @@ public  class Utility {
 	}
 
 //Method for CalendarQueue
-	public static void CalendarQueue(int m,int y) {
-		QueueLinkList month=new QueueLinkList();
-		QueueLinkList day=new QueueLinkList();
-		String[] months={"Jan","Feb","Mar","Apr","May","Jun","Jul","Sept","Oct","Nov","Dec"};
-		int[] days={31,28,31,30,31,30,31,31,30,31,30,31};
-		for(int i=0;i<months.length;i++)
-		{
-			month.insert(months[i]);
+	public static void CalendarQueue(int month,int year) 
+	{
+		QueueLinkList weekday=new QueueLinkList();
+		String[] months = {"January", "February", "March","April", "May", "June",
+	            "July", "August", "September","October", "November", "December"};
+
+	        int[] days = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	        if ((month == 2) && (isLeapOrNot(year))) 
+	        {
+	        	days[month] = 29;
+	        }
+	        System.out.println("\t\t\t" + months[month-1] + " " + year);
+	        System.out.println("\tSun\tMon\tTue\tWed\tThu\tFri\tSat");
+	        int d = dayOfWeek(month, 1, year);
+	        for(int i=0;i<d;i++)
+	        {
+	        	weekday.insert("\t");
+	        }
+	        for (int i = 1; i <= days[month-1]; i++)
+	        {
+	            //System.out.printf("%2d ", i);
+	            weekday.insert("\t"+i);
+	            if (((i + d) % 7 == 0) || (i == days[month-1])) 
+	            weekday.insert("\n");
+	        } 
+	        weekday.display();
+	}
+//Method for Calendar Stack
+	public static void CalendarStack(int month,int year) {
+		StackLinkList space=new StackLinkList();
+		StackLinkList weekday=new StackLinkList();
+		String[] months = {"January", "February", "March","April", "May", "June",
+	            "July", "August", "September","October", "November", "December"};
+
+	        int[] days = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	        if ((month == 2) && (isLeapOrNot(year))) 
+	        {
+	        	days[month] = 29;
+	        }
+	        System.out.println("\t\t\t" + months[month-1] + " " + year);
+	        System.out.println("\tSun\tMon\tTue\tWed\tThu\tFri\tSat");
+	        int d = dayOfWeek(month, 1, year);
+	        for(int i=0;i<d;i++)
+	        {
+  	        	space.insert("\t");
+	        }
+	        space.display();
+	       
+	        for (int i = days[month-1]; i >=1 ; i--)
+	        {
+	        	
+	            //System.out.printf("%2d", i);
+	            weekday.insert("\t"+i);
+	            if (((i - d) % 7 == 0) || (i == days[month-1])) 	
+	            weekday.insert("\n");
+	        } 
+	        weekday.display();
+	        
+	}
+//Method for Inventory Data Management
+	public static void inventory(FileReader fileread) throws IOException, ParseException {
+			JSONParser parse=new JSONParser();
+			JSONObject object=(JSONObject) parse.parse(fileread);
+			//System.out.println(object);
+			Iterator<?> iterator=object.keySet().iterator();//Keys of Object(rice,wheat,pulses)
+			while(iterator.hasNext())
+			{
+				String topkey=(String)iterator.next();
+				JSONObject obj=(JSONObject) object.get(topkey);
+				Iterator<?> iterate = obj.keySet().iterator();//keys of each specific object
+				while(iterate.hasNext())
+				{
+					String key=(String) iterate.next();
+					System.out.println(key+":"+obj.get(key));
+				}
+				Integer amount=(Integer.parseInt(obj.get("Price").toString())) * (Integer.parseInt(obj.get("Weight").toString()));
+				System.out.println("The total cost of "+obj.get("Name")+" is: "+amount);
+				System.out.println();
+			}
+	}
+
+
+//Method for regular Expression
+	public static void regularExpression(String firstname, String lastname, String mobile) 
+	{
+		String message="Hello <<name>>, We have your full name as <<full name>> in our system.\n" +
+				"Your contact number is 91-XXXXXXXXXX. Please,let us know in case of any\n" +
+				"clarification.\nThank you BridgeLabz XX/XX/XXXX .";	
+		Date d=new Date();
+		String date=new SimpleDateFormat().format(d);
+		String name=firstname+" "+lastname;
+		message=message.replace("<<name>>", firstname);
+		message=message.replace("<<full name>>", name);
+		message=message.replace("XXXXXXXXXX", mobile);
+		message=message.replace("XX/XX/XXXX", date);
+		System.out.println(message);
 		}
-		for(int i=0;i<days.length;i++)
+
+//Method for Stock Report
+	public static void stockReport(FileReader fileread) throws IOException, ParseException 
+	{
+		JSONParser parse=new JSONParser();
+		
+		int total = 0;
+		JSONObject object=(JSONObject) parse.parse(fileread);
+		//System.out.println(object);
+		Iterator<?> iterator=object.keySet().iterator();
+		while(iterator.hasNext())
 		{
-			day.insert(days[i]);
+			String topkey=(String)iterator.next();
+			JSONObject obj=(JSONObject) object.get(topkey);
+			System.out.println("Company name:"+topkey);
+			long price=(Long) obj.get("Price");
+			long num=(Long) obj.get("NumShare");
+			total+=price*num;
+			System.out.println("Price:"+price);
+			System.out.println("Number Of Shares:"+num);
+			System.out.println("Total Stock is:"+price*num);
+			System.out.println();
 		}
-		month.display();
-		if ((m == 2) && (isLeapOrNot(y))) 
-	    {
-	      	days[m] = 29;
-	    }
-		System.out.println("   " + months[m] + " " + y);
-        System.out.println(" S  M Tu  W Th  F  St");
-        int d = dayOfWeek(m, 1, y);
-        
-        for (int i = 0; i < d; i++)
-        {
-            System.out.print("   ");
-        }
-        
-        for (int i = 1; i <= days[m]; i++)
-        {
-            System.out.printf("%2d ", i);
-            if (((i + d) % 7 == 0) || (i == days[m])) 
-            	System.out.println();
-        } 
-	}	
+		System.out.println("Total amount of shares is:"+total);
+	}
+
+//Method for Inventory Management
+	public static void inventoryManage(FileReader fileread) throws IOException, ParseException {
+		JSONParser parse=new JSONParser();
+		JSONObject object=(JSONObject) parse.parse(fileread);
+		//System.out.println(object);
+		int total=0;
+		Iterator<?> iterator=object.keySet().iterator();//Keys of Object(rice,wheat,pulses)
+		while(iterator.hasNext())
+		{
+			String topkey=(String)iterator.next();
+			JSONObject obj=(JSONObject) object.get(topkey);
+			Iterator<?> iterate = obj.keySet().iterator();//keys of each specific object
+			while(iterate.hasNext())
+			{
+				String key=(String) iterate.next();
+				System.out.println(key+":"+obj.get(key));
+			}
+			Integer amount=(Integer.parseInt(obj.get("Price").toString())) * (Integer.parseInt(obj.get("Weight").toString()));
+			System.out.println("The total cost of "+obj.get("Name")+" is: "+amount);
+			System.out.println();
+			total=total+amount;		
+	}
+		System.out.println("The total Amount of inventory is:"+total);
+	}
+
+//Method for Commercial data Processing
+	public static void CommericalData(int choice) throws IOException, ParseException 
+	{
+		switch(choice)
+		{
+		case 1: System.out.println("Creating Account");
+				createAccount();
+				break;
+		case 2: System.out.println("");
+				valueOf();
+				break;
+		case 3: System.out.println("You are buying Shares");
+				System.out.println("Enter the Sysmbol:");
+				String symbol=Utility.inputString();
+				System.out.println("Enter the amount:");
+				double amount=Utility.inputDouble();
+				buyShare(symbol,amount);
+				break;
+		case 4: System.out.println("You are selling shares");
+				System.out.println("Enter the Sysmbol:");
+				String symbol1=Utility.inputString();
+				System.out.println("Enter the amount:");
+				double amount1=Utility.inputDouble();
+				sellShare(symbol1,amount1);
+				break;
+		case 5: System.out.println("Saving into file");
+				String filename="";
+				saveFile(filename);
+				break;
+		case 6: System.out.println("Print Report");
+		 		printReport();
+		 		break;
+		default: break;
+		}
+		
+	}
+
+	private static void printReport() {
+		
+		
+	}
+
+	private static void saveFile(String filename) {
+		
+		
+	}
+
+	private static void sellShare(String symbol1, double amount1) {
+		
+		
+	}
+
+	private static void buyShare(String symbol, double amount) {
+	
+		
+	}
+
+	private static void valueOf() {
+	
+	}
+
+	private static void createAccount() throws IOException, ParseException {
+		String filename="/home/bridgeit/workspace/Files/commerical.json";
+		FileReader fileread=fileRead(filename);
+		JSONParser parse=new JSONParser();
+		JSONObject object=(JSONObject) parse.parse(fileread);
+		System.out.println(object);
+	}
+
+
 }
