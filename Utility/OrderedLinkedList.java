@@ -1,5 +1,6 @@
 package com.bridgelabz.Utility;
 
+
 public class OrderedLinkedList<N extends Comparable<N>>
 {
 	Node1<N> head;
@@ -89,14 +90,14 @@ public class OrderedLinkedList<N extends Comparable<N>>
 			while(temp.next!=null)
 			{
 				status=false;
-				if(temp.data.equals(item))
+				if(temp.data==item)
 				{
 					status=true;
 					break;
 				}	
 				temp=temp.next;
 			}
-			if(temp.data==item)
+			if(temp.data.equals(item))
 				status=true;
 			if(status==true)
 			{
@@ -151,8 +152,7 @@ public class OrderedLinkedList<N extends Comparable<N>>
 				
 				ind++;
 				temp=temp.next;
-			}
-			
+			}		
 	}
 	public void insertAt(int pos,N item) 
 	{
@@ -240,19 +240,19 @@ public class OrderedLinkedList<N extends Comparable<N>>
         }
     }
 	public static void main(String[] args) {
-	/*	OrderedLinkedList<Integer> list= new OrderedLinkedList<Integer>();
+		OrderedLinkedList<Integer> list= new OrderedLinkedList<Integer>();
 		list.add(8);
 		list.add(5);
 		list.add(9);
 		list.search(5);
-		list.append(10);
+//		list.append(10);
+	/*	list.printList();
+		list.index(9);
+		list.insertAt(2, 12);
+		list.pop();
+		list.pop(1);*/
 		list.printList();
-		//list.index(9);
-		//list.insertAt(2, 12);
-		//list.pop();
-		//list.pop(1);
-		//list.printList();
-*/		
+
 	
 	}
 }

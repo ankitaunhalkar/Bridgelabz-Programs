@@ -2,6 +2,7 @@ package com.bridgelabz.Utility;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -10,12 +11,12 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
-
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
 import com.bridgelabz.Utility.LinkedList.Node;
 import com.bridgelabz.Utility.OrderedLinkedList.Node1;
 
@@ -458,47 +459,37 @@ public  class Utility {
 			System.out.println(str1+" , "+str2+" are not Anagram Strings");
 		}
 	}
-
+//To check number is prime or not
+	public static boolean isPrime (int number) {
+   
+     for(int i=2; i<=number/2; i++){
+         if(number % i == 0){
+             return false;
+         }
+     }
+     return true;
+	}
 //Method for Prime Numbers
 	public static int[] primeNumbers(int n) 
 	{
-		int k=0;
-		int output[]=new int[n];
-		int num;	
-		//int len = 0;
-		//int[] newarray;
-		for(int i=1;i<=n;i++)
-		{
-			
-			int count=0;
-			num=i;
-			for(int j=1;j<=num;j++)
-			{
-				if(num%j==0)
-				{
-					count++;
-					
-				}
-			}
-			if(count==2)
-			{
-				//System.out.print(num);
-				//System.out.print("");
-				output[k++]=num;
-				//len++;
-			}
-		}
-		
-		/*newarray=new int[len];
-		for(int i=0;i<len;i++)
-		{
-			if(output[i]!=0)
-			{
-				newarray[k]=output[i];
-				k++;
-			}
-		}*/
-		return output;
+		 int[] primes = new int[n];
+	      int ncounter = 0;
+	      int isPrime = 2;
+	      while( ncounter < n){
+	        boolean prime = true;
+	        for (int j=2; j<isPrime; j++){
+	          if (isPrime%j ==0){
+	            prime = false;
+	            break;
+	          }
+	        }
+	        if (prime){
+	          primes[ncounter] = isPrime;
+	          ncounter++;
+	        } 
+	        isPrime++;
+	       }
+	      return primes;
 	}
 
 //Method to display array
@@ -516,7 +507,7 @@ public  class Utility {
 		{
 			for(int j=i+1;j<len;j++)
 			{
-				System.out.println(out[i]+" "+out[j]);
+				//System.out.println(out[i]+" "+out[j]);
 				AnagramInteger(out[i],out[j]);
 			}
 		}
@@ -524,9 +515,13 @@ public  class Utility {
 	}
 //Method for integer anagram
 	public static void AnagramInteger(int n1, int n2) {
+		//System.out.println(n1+ " " +n2);
+		int size=8;
+		int num1=n1;int num2=n2;
 		long binary_a[]=new long[10];
 		long binary_b[]=new long[10];
 		int i=0;
+		 Arrays.fill(binary_a, 0);
 		while(n1>0)
 		{
 			binary_a[i]=n1%2;
@@ -534,6 +529,7 @@ public  class Utility {
 			i++;
 		}
 		int j=0;
+		 Arrays.fill(binary_b, 0);
 		while(n2>0)
 		{
 			binary_b[j]=n2%2;
@@ -542,14 +538,18 @@ public  class Utility {
 		}
 		Arrays.sort(binary_a);
 		Arrays.sort(binary_b);
-		if(binary_a==binary_b)
-		{
-			//System.out.println(n1+" "+n2+"is a angram");
+		for (int j2 = 0; j2 < size; j2++) {
+			if(binary_a[i]==binary_b[i])
+			{
+				System.out.println(num1+" "+num2+"is not a angram");
+			}
+			else
+			{
+				System.out.println(num1+" "+num2+"is a angram");	
+			}
 		}
-		else
-		{
-			//System.out.println(n1+" "+n2+"is not a angram");
-		}
+		
+		
 	}
 	
 //Method to find Palindrome
@@ -569,7 +569,7 @@ public  class Utility {
 			}
 			if(temp==reverse)
 			{
-				System.out.println(temp+"is Palindrome");
+				System.out.println(temp+" is Palindrome");
 			}
 		}
 	}
@@ -975,6 +975,8 @@ public  class Utility {
 		}
 			System.out.println(str);
 			bw.write(str);
+			bw.flush();
+			bw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -1004,7 +1006,7 @@ public  class Utility {
 			}
 			for (int i = 0; i < array.length; i++) 
 			{
-				System.out.println(array[i]);
+				//System.out.println(array[i]);
 				list.add(array[i]);
 			}
 		list.printList();
@@ -1029,6 +1031,8 @@ public  class Utility {
 		}
 			//System.out.println(str);
 			bw.write(str);
+			bw.flush();
+			bw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -1205,7 +1209,12 @@ public  class Utility {
 		result=value/(num+1);
 		return result;
 	}
+	public static void Prime2D()
+	{
+		//int count=0;
 
+		//}
+	}
 //Method for CalendarQueue
 	public static void CalendarQueue(int month,int year) 
 	{
@@ -1254,13 +1263,11 @@ public  class Utility {
   	        	space.insert("\t");
 	        }
 	        space.display();
-	       
-	        for (int i = days[month-1]; i >=1 ; i--)
+	        for (int i = days[month-1] ; i >=1 ; i--)
 	        {
-	        	
 	            //System.out.printf("%2d", i);
 	            weekday.insert("\t"+i);
-	            if (((i - d) % 7 == 0) || (i == days[month-1])) 	
+	            if (((i + d) % 7 == 0) || (i == days[month-1])) 	
 	            weekday.insert("\n");
 	        } 
 	        weekday.display();
@@ -1356,8 +1363,11 @@ public  class Utility {
 	}
 
 //Method for Commercial data Processing
-	public static void CommericalData(int choice) throws IOException, ParseException 
+	public static void StockAccount() throws IOException, ParseException 
 	{
+		System.out.println("Enter Your Chocie");
+		System.out.println("1.Create a new Account\n2.Value Of\n3.Buy Shares\n4.Sell Shares\n5.Save Account\n5.Print Report");
+		int choice=Utility.inputInt();
 		switch(choice)
 		{
 		case 1: System.out.println("Creating Account");
@@ -1367,17 +1377,17 @@ public  class Utility {
 				valueOf();
 				break;
 		case 3: System.out.println("You are buying Shares");
-				System.out.println("Enter the Sysmbol:");
+				System.out.println("Enter the Symbol:");
 				String symbol=Utility.inputString();
 				System.out.println("Enter the amount:");
-				double amount=Utility.inputDouble();
+				int amount=Utility.inputInt();
 				buyShare(symbol,amount);
 				break;
 		case 4: System.out.println("You are selling shares");
 				System.out.println("Enter the Sysmbol:");
 				String symbol1=Utility.inputString();
 				System.out.println("Enter the amount:");
-				double amount1=Utility.inputDouble();
+				int amount1=Utility.inputInt();
 				sellShare(symbol1,amount1);
 				break;
 		case 5: System.out.println("Saving into file");
@@ -1392,37 +1402,248 @@ public  class Utility {
 		
 	}
 
-	private static void printReport() {
+	public static void printReport() {
 		
 		
 	}
 
-	private static void saveFile(String filename) {
+	public static void saveFile(String filename) {
 		
 		
 	}
 
-	private static void sellShare(String symbol1, double amount1) {
+	@SuppressWarnings("unchecked")
+	public static void sellShare(String symbol, int amount) throws IOException, ParseException
+	{
+		File companyStock=new File("/home/bridgeit/workspace/Files/companyStock.json");
+		File customerShare=new File("/home/bridgeit/workspace/Files/customerShare.json");
+		if(companyStock.exists() && customerShare.exists())
+		{
+				//Stock reading
+				FileReader fr=new FileReader(companyStock);
+				JSONParser parse=new JSONParser();
+				JSONArray stockArray=(JSONArray) parse.parse(fr);
+				JSONObject stock=new JSONObject();
+			
+			
+				//Share reading
+				FileReader fr1=new FileReader(customerShare);
+				JSONParser par=new JSONParser();
+				JSONArray shareArray = (JSONArray) par.parse(fr1);
+				JSONObject share=new JSONObject();
+				
+				System.out.println("Enter Name:");
+				String name=inputString();
+				Iterator<?> iterateStock = stockArray.iterator();
+				Iterator<?> iterateShare = shareArray.iterator();
+				while(iterateShare.hasNext())
+				{
+					JSONObject shareobj=(JSONObject) iterateShare.next();
+					
+					if(name.equals(shareobj.get("name")));
+					{
+								while(iterateStock.hasNext())
+								{
+									JSONObject stockobj=(JSONObject) iterateStock.next();
+									System.out.println(stockobj);
+									if(symbol.equals(stockobj.get("Symbol")))
+									{
+										int price=Integer.parseInt(stockobj.get("Price").toString());
+										int balance=Integer.parseInt(shareobj.get("Balance").toString());
+										System.out.println(price+" "+balance);
+										if(price>=amount)
+										{
+											balance-=amount;
+											price+=amount;
+											share.remove("Balance");
+											stock.remove("Price");
+											share.put("Balance", balance);
+											stock.put("Price", price);
+											shareArray.add(share);
+											stockArray.add(stock);
+											
+										}
+									}
+								}
+					}
+				}
+				//FileWriter fw=new FileWriter(companyStock);
+				FileWriter fw1=new FileWriter(customerShare);
+				//fw.write(stockArray.toString());
+				//System.out.println(stockArray);
+				fw1.write(shareArray.toString());
+				System.out.println(shareArray);
+				fw1.flush();
+				fw1.close();
+		}	
 		
 		
 	}
 
-	private static void buyShare(String symbol, double amount) {
+	@SuppressWarnings("unchecked")
+	public static void buyShare(String symbol, int amount) throws IOException, ParseException
+	{
+		File companyStock=new File("/home/bridgeit/workspace/Files/companyStock.json");
+		File customerShare=new File("/home/bridgeit/workspace/Files/customerShare.json");
+		if(companyStock.exists() && customerShare.exists())
+		{
+				//Stock reading
+				FileReader fr=new FileReader(companyStock);
+				JSONParser parse=new JSONParser();
+				JSONArray stockArray=(JSONArray) parse.parse(fr);
+				JSONObject stock=new JSONObject();
+			
+			
+				//Share reading
+				FileReader fr1=new FileReader(customerShare);
+				JSONParser par=new JSONParser();
+				JSONArray shareArray = (JSONArray) par.parse(fr1);
+				JSONObject share=new JSONObject();
+				
+				System.out.println("Enter Name:");
+				String name=inputString();
+				Iterator<?> iterateStock = stockArray.iterator();
+				Iterator<?> iterateShare = shareArray.iterator();
+				while(iterateShare.hasNext())
+				{
+					JSONObject shareobj=(JSONObject) iterateShare.next();
+					
+					if(name.equals(shareobj.get("name")));
+					{
+								while(iterateStock.hasNext())
+								{
+									JSONObject stockobj=(JSONObject) iterateStock.next();
+									System.out.println(stockobj);
+									if(symbol.equals(stockobj.get("Symbol")))
+									{
+										int price=Integer.parseInt(stockobj.get("Price").toString());
+										int balance=Integer.parseInt(shareobj.get("Balance").toString());
+										System.out.println(price+" "+balance);
+										if(price>=amount)
+										{
+											balance+=amount;
+											price-=amount;
+											share.remove("Balance");
+											stock.remove("Price");
+											share.put("Balance", balance);
+											stock.put("Price", price);
+											shareArray.add(share);
+											stockArray.add(stock);
+											
+										}
+									}
+								}
+					}
+				}
+				//FileWriter fw=new FileWriter(companyStock);
+				FileWriter fw1=new FileWriter(customerShare);
+				//fw.write(stockArray.toString());
+				//System.out.println(stockArray);
+				fw1.write(shareArray.toString());
+				System.out.println(shareArray);
+				fw1.flush();
+				fw1.close();
+		}	
+		
+	}
+
+	public static void valueOf() {
 	
+	}
+
+	@SuppressWarnings({ "unchecked"})
+	public static void createAccount() throws IOException, ParseException {
+		File customerFile=new File("/home/bridgeit/workspace/Files/customerShare.json");
+		if(customerFile.exists())
+		{
+		
+			while(true)
+			{
+				System.out.println("Ready to create account? Yes or No");
+				if(inputString().equals("yes"))
+				{
+				FileReader fr=new FileReader(customerFile);
+
+				JSONParser parse=new JSONParser();
+				JSONArray jarray=(JSONArray) parse.parse(fr);
+				JSONObject jobject=new JSONObject();
+				
+				System.out.println("Enter Your Name:");
+				String name=inputString();
+				System.out.println("Enter the Balance:");
+				int balance=inputInt();
+				System.out.println("Enter the share count:");
+				int shareCount=inputInt();
+				
+				jobject.put("Name", name);
+				jobject.put("Balance", balance);
+				jobject.put("ShareCount", shareCount);
+				jarray.add(jobject);
+				
+				FileWriter fw=new FileWriter(customerFile);
+				fw.write(jarray.toString());
+				System.out.println(jarray);
+				fw.flush();
+				fw.close();
+				}
+				else
+				{
+					System.out.println("Thank You");
+					break;
+				}
+			}		
+		}
+		StockAccount();
+	}
+
+	public static void addressBook() {
+		System.out.println("Enter the choice:\n1.Add\n2.Edit\n3.Delete");
+		int choice=Utility.inputInt();
+		switch (choice) {
+		case 1:addAddress();
+			break;
+			
+		case 2:editAddress();
+			break;
+			
+		case 3:deleteAddress();
+			break;
+		default:
+			break;
+		}
+	}
+
+	public static void deleteAddress() {
+			
+	}
+
+	public static void editAddress() {
 		
 	}
 
-	private static void valueOf() {
-	
+	public static void addAddress() {
+		System.out.println("Enter First Name:");
+		String firstname=inputString();
+		System.out.println("Enter Last Name:");
+		String lastname=inputString();
+		System.out.println("Enter Address:");
+		String address=inputString();
+		System.out.println("Enter City:");
+		String city=inputString();
+		System.out.println("Enter State:");
+		String state=inputString();
+		System.out.println("Enter Zip:");
+		int zip=inputInt();
+		System.out.println("Enter Phone Number:");
+		long phone=inputlong();
+		
+		JSONObject person=new JSONObject();
+		 person.put("Firstname", firstname);
+		 person.put("Firstname", lastname);
+		 person.put("Address", address);
+		 person.put("City", city);
+		 person.put("State", state);
+		 person.put("Zip", zip);
+		 person.put("Phone", phone);
 	}
-
-	private static void createAccount() throws IOException, ParseException {
-		String filename="/home/bridgeit/workspace/Files/commerical.json";
-		FileReader fileread=fileRead(filename);
-		JSONParser parse=new JSONParser();
-		JSONObject object=(JSONObject) parse.parse(fileread);
-		System.out.println(object);
-	}
-
-
 }
