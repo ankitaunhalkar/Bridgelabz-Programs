@@ -87,26 +87,21 @@ public class OrderedLinkedList<N extends Comparable<N>>
 	{
 		Node1<N> temp=head;
 		boolean status=false;
-			while(temp.next!=null)
+			while(temp!=null)
 			{
 				status=false;
 				if(temp.data==item)
 				{
 					status=true;
+					System.out.println("Found in list");
+					remove(item);
 					break;
 				}	
 				temp=temp.next;
 			}
-			if(temp.data.equals(item))
-				status=true;
-			if(status==true)
-			{
-				System.out.println("Found in list");
-				remove(item);
-			}
-			else
-			{
-				System.out.println("Not found in list, So it is Added to the list");
+			
+			if(status==false){
+			System.out.println("Not found in list, So it is Added to the list");
 				add(item);
 			}
 	}
@@ -244,6 +239,7 @@ public class OrderedLinkedList<N extends Comparable<N>>
 		list.add(8);
 		list.add(5);
 		list.add(9);
+		list.printList();
 		list.search(5);
 //		list.append(10);
 	/*	list.printList();

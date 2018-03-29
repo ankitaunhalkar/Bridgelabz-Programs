@@ -23,18 +23,20 @@ void insert(Object data)
 	top=newnode;
 	size++;
 }
-void delete()
+Object delete()
 {
+	Node3 temp = null;
 	if(isEmpty())
 	{
 		System.out.println("Stack is empty! Cannot delete");
 	}
 	else
 	{
-		Node3 temp=top;
+		temp=top;
 		top=temp.linkNext;
 		size--;
 	}
+	return temp.data;
 }
 void display()
 {

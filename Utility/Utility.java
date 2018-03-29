@@ -11,10 +11,10 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Scanner;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import com.bridgelabz.Utility.LinkedList.Node;
@@ -868,12 +868,13 @@ public  class Utility {
 			}
 			System.out.println("Before Swapping Nibbles:"+binary);
 			char arr[] = binary.toCharArray();
-			for (int i=0;i<3;i++)
+			for (int i=0;i<4;i++)
 			{
 				char ch = arr[i];
 				arr[i]= arr[i+4];
 				arr[i+4]= ch; 
 			}
+			
 			binary = String.valueOf(arr);
 			System.out.println("After Swapping Nibbles:"+binary);
 			int c = Integer.parseInt(binary);
@@ -1243,10 +1244,11 @@ public  class Utility {
 	        } 
 	        weekday.display();
 	}
+	
 //Method for Calendar Stack
 	public static void CalendarStack(int month,int year) {
-		StackLinkList space=new StackLinkList();
-		StackLinkList weekday=new StackLinkList();
+		StackLinkList weekdayIn=new StackLinkList();
+		StackLinkList weekdayOut=new StackLinkList();
 		String[] months = {"January", "February", "March","April", "May", "June",
 	            "July", "August", "September","October", "November", "December"};
 
@@ -1260,19 +1262,30 @@ public  class Utility {
 	        int d = dayOfWeek(month, 1, year);
 	        for(int i=0;i<d;i++)
 	        {
-  	        	space.insert("\t");
+  	        	weekdayIn.insert("\t");
+  	        	
 	        }
-	        space.display();
-	        for (int i = days[month-1] ; i >=1 ; i--)
+	        for(int i=0;i<d;i++)
 	        {
-	            //System.out.printf("%2d", i);
-	            weekday.insert("\t"+i);
+  	        	
+  	        	weekdayOut.insert(weekdayIn.delete());
+	        }
+	        weekdayOut.display();
+	        for (int i = 1 ; i <=days[month-1] ; i++)
+	        {
+	            weekdayIn.insert("\t"+i);
 	            if (((i + d) % 7 == 0) || (i == days[month-1])) 	
-	            weekday.insert("\n");
-	        } 
-	        weekday.display();
-	        
+		            weekdayIn.insert("\n");
+	         }
+	       for(int i=1;i<=days[month-1] ; i++)
+	       {
+	    	  
+	    	  
+	    	   weekdayOut.insert(weekdayIn.delete());
+	       }
+	        weekdayOut.display();
 	}
+	
 //Method for Inventory Data Management
 	public static void inventory(FileReader fileread) throws IOException, ParseException {
 			JSONParser parse=new JSONParser();
@@ -1402,8 +1415,16 @@ public  class Utility {
 		
 	}
 
-	public static void printReport() {
-		
+	public static void printReport() throws IOException, ParseException {
+		FileReader file=fileRead("/home/bridgeit/workspace/Files/customerShare.json");	
+		JSONParser parser=new JSONParser();
+		JSONArray shareArray=(JSONArray)parser.parse(file);
+		Iterator<?> iterator=shareArray.iterator();
+		while(iterator.hasNext())
+		{
+			JSONObject shareobj=(JSONObject) iterator.next();
+			System.out.println(shareobj);
+		}
 		
 	}
 
@@ -1423,14 +1444,14 @@ public  class Utility {
 				FileReader fr=new FileReader(companyStock);
 				JSONParser parse=new JSONParser();
 				JSONArray stockArray=(JSONArray) parse.parse(fr);
-				JSONObject stock=new JSONObject();
+				//JSONObject stock=new JSONObject();
 			
 			
 				//Share reading
 				FileReader fr1=new FileReader(customerShare);
 				JSONParser par=new JSONParser();
 				JSONArray shareArray = (JSONArray) par.parse(fr1);
-				JSONObject share=new JSONObject();
+				//JSONObject share=new JSONObject();
 				
 				System.out.println("Enter Name:");
 				String name=inputString();
@@ -1453,30 +1474,45 @@ public  class Utility {
 										System.out.println(price+" "+balance);
 										if(price>=amount)
 										{
-											balance-=amount;
-											price+=amount;
-											share.remove("Balance");
-											stock.remove("Price");
-											share.put("Balance", balance);
-											stock.put("Price", price);
-											shareArray.add(share);
-											stockArray.add(stock);
+											int countStock=Integer.parseInt(stockobj.get("NumShare").toString());
+											int countShare=Integer.parseInt(shareobj.get("ShareCount").toString());
+											int numShare=amount*price;
+											int newbal=balance+amount;
+											int shareCount=countShare+numShare;
+											int stockCount = countStock-numShare;
 											
+											System.out.println(stockArray);
+											System.out.println(shareArray);
+											
+											stockobj.remove("NumShare");
+											shareobj.remove("Balance");
+											shareobj.remove("ShareCount");
+											
+											stockobj.put("NumShare",stockCount);
+											shareobj.put("Balance", newbal);
+											shareobj.put("ShareCount", shareCount);
+											
+											Date d=new Date();
+											String date=new SimpleDateFormat().format(d);
+											stockobj.put("Date", date);
 										}
 									}
 								}
 					}
+					
 				}
-				//FileWriter fw=new FileWriter(companyStock);
+				System.out.println();
+				FileWriter fw=new FileWriter(companyStock);
+				fw.write(JSONValue.toJSONString(stockArray));
+				fw.flush();
+				fw.close();
+				
+				
 				FileWriter fw1=new FileWriter(customerShare);
-				//fw.write(stockArray.toString());
-				//System.out.println(stockArray);
-				fw1.write(shareArray.toString());
-				System.out.println(shareArray);
+				fw1.write(JSONValue.toJSONString(shareArray));
 				fw1.flush();
 				fw1.close();
 		}	
-		
 		
 	}
 
@@ -1491,14 +1527,14 @@ public  class Utility {
 				FileReader fr=new FileReader(companyStock);
 				JSONParser parse=new JSONParser();
 				JSONArray stockArray=(JSONArray) parse.parse(fr);
-				JSONObject stock=new JSONObject();
+				//JSONObject stock=new JSONObject();
 			
 			
 				//Share reading
 				FileReader fr1=new FileReader(customerShare);
 				JSONParser par=new JSONParser();
 				JSONArray shareArray = (JSONArray) par.parse(fr1);
-				JSONObject share=new JSONObject();
+				//JSONObject share=new JSONObject();
 				
 				System.out.println("Enter Name:");
 				String name=inputString();
@@ -1521,26 +1557,42 @@ public  class Utility {
 										System.out.println(price+" "+balance);
 										if(price>=amount)
 										{
-											balance+=amount;
-											price-=amount;
-											share.remove("Balance");
-											stock.remove("Price");
-											share.put("Balance", balance);
-											stock.put("Price", price);
-											shareArray.add(share);
-											stockArray.add(stock);
+											int countStock=Integer.parseInt(stockobj.get("NumShare").toString());
+											int countShare=Integer.parseInt(shareobj.get("ShareCount").toString());
+											int numShare=amount/price;
+											int newbal=balance-amount;
+											int shareCount=countShare+numShare;
+											int stockCount = countStock-numShare;
 											
+											System.out.println(stockArray);
+											System.out.println(shareArray);
+											
+											stockobj.remove("NumShare");
+											shareobj.remove("Balance");
+											shareobj.remove("ShareCount");
+											
+											stockobj.put("NumShare",stockCount);
+											shareobj.put("Balance", newbal);
+											shareobj.put("ShareCount", shareCount);
+											
+											Date d=new Date();
+											String date=new SimpleDateFormat().format(d);
+											stockobj.put("Date", date);
 										}
 									}
 								}
 					}
+					
 				}
-				//FileWriter fw=new FileWriter(companyStock);
+				System.out.println();
+				FileWriter fw=new FileWriter(companyStock);
+				fw.write(JSONValue.toJSONString(stockArray));
+				fw.flush();
+				fw.close();
+				
+				
 				FileWriter fw1=new FileWriter(customerShare);
-				//fw.write(stockArray.toString());
-				//System.out.println(stockArray);
-				fw1.write(shareArray.toString());
-				System.out.println(shareArray);
+				fw1.write(JSONValue.toJSONString(shareArray));
 				fw1.flush();
 				fw1.close();
 		}	
@@ -1596,7 +1648,7 @@ public  class Utility {
 		StockAccount();
 	}
 
-	public static void addressBook() {
+	public static void addressBook() throws IOException, ParseException {
 		System.out.println("Enter the choice:\n1.Add\n2.Edit\n3.Delete");
 		int choice=Utility.inputInt();
 		switch (choice) {
@@ -1608,20 +1660,102 @@ public  class Utility {
 			
 		case 3:deleteAddress();
 			break;
+		
+		case 4:sortAddress();
+			break;
 		default:
 			break;
 		}
 	}
 
-	public static void deleteAddress() {
-			
-	}
+	public static void sortAddress() throws IOException, ParseException {
+		FileReader fr = new FileReader("/home/bridgeit/workspace/Files/AddressBook.json");
+		JSONParser parser=new JSONParser();
+		JSONArray array=(JSONArray) parser.parse(fr);
 
-	public static void editAddress() {
 		
+		System.out.println("Enter the attribute name through which you want sort:");
+	//	String attribute=inputString();
+		
+		Iterator<?> iterate=array.iterator();
+		while(iterate.hasNext())
+		{
+		//s	JSONObject obj=(JSONObject) iterate.next();
+		}
 	}
 
-	public static void addAddress() {
+	public static void deleteAddress() throws IOException, ParseException {
+		FileReader fr = new FileReader("/home/bridgeit/workspace/Files/AddressBook.json");
+		JSONParser parser=new JSONParser();
+		JSONArray array=(JSONArray) parser.parse(fr);
+
+		
+		System.out.println("Enter your First name To delete:");
+		String name=inputString();
+		
+		Iterator<?> iterate=array.iterator();
+		while(iterate.hasNext())
+		{
+			JSONObject obj=(JSONObject) iterate.next();
+			if(name.equals(obj.get("Firstname")))
+			{
+				System.out.println(obj);
+				array.remove(obj);
+				System.out.println("Address show above is deleted");
+			}
+		}
+		 FileWriter fw=fileWrite("/home/bridgeit/workspace/Files/AddressBook.json");
+		 fw.write(JSONValue.toJSONString(array));
+		 fw.flush();
+		 fw.close();
+	}
+
+	@SuppressWarnings("unchecked")
+	public static void editAddress() throws IOException, ParseException {
+
+		FileReader fr = new FileReader("/home/bridgeit/workspace/Files/AddressBook.json");
+		JSONParser parser=new JSONParser();
+		JSONArray array=(JSONArray) parser.parse(fr);
+				
+		System.out.println("Enter your First name To Edit:");
+		String name=inputString();
+		
+		Iterator<?> iterate=array.iterator();
+		while(iterate.hasNext())
+		{
+			
+			JSONObject object=(JSONObject) iterate.next();
+			if(name.equals(object.get("Firstname")))
+			{
+				System.out.println(object);
+				
+				System.out.println("What you want to edit?");
+				String attribute=inputString();
+				
+				object.remove(attribute);
+				
+				System.out.println("Enter your new value:");
+				String value=inputString();
+				
+				object.put(attribute, value);
+				
+				System.out.println(object);
+			}
+		}
+		 FileWriter fw=fileWrite("/home/bridgeit/workspace/Files/AddressBook.json");
+		 fw.write(JSONValue.toJSONString(array));
+		 fw.flush();
+		 fw.close();
+	}
+
+	@SuppressWarnings("unchecked")
+	public static void addAddress() throws IOException, ParseException {
+		
+		FileReader fr = new FileReader("/home/bridgeit/workspace/Files/AddressBook.json");
+		JSONParser parser=new JSONParser();
+		JSONArray array=(JSONArray) parser.parse(fr);
+		JSONObject person=new JSONObject();
+		
 		System.out.println("Enter First Name:");
 		String firstname=inputString();
 		System.out.println("Enter Last Name:");
@@ -1637,13 +1771,55 @@ public  class Utility {
 		System.out.println("Enter Phone Number:");
 		long phone=inputlong();
 		
-		JSONObject person=new JSONObject();
 		 person.put("Firstname", firstname);
-		 person.put("Firstname", lastname);
+		 person.put("Lastname", lastname);
 		 person.put("Address", address);
 		 person.put("City", city);
 		 person.put("State", state);
 		 person.put("Zip", zip);
 		 person.put("Phone", phone);
+		 array.add(person);
+		 System.out.println("Added SuccuessFully");	
+		
+		 FileWriter fw=fileWrite("/home/bridgeit/workspace/Files/AddressBook.json");
+		 fw.write(JSONValue.toJSONString(array));
+		 fw.flush();
+		 fw.close();
 	}
+
+	public static void cliniqueManagement() {
+		System.out.println("Welcome to Clinique Management");
+		System.out.println("Press the number, you would like to choose!");
+		System.out.println("1.Search For Doctor\n2.Search For Patient\n3.Book Appointment");
+		int choice=inputInt();
+		switch (choice) {
+		case 1:System.out.println("Search Doctor by ID,Name,Specialization or Availability");
+			   String attribute=inputString();
+			   System.out.println("Enter the Value:");
+			   String value=inputString();
+			   searchDoctor(attribute,value);
+			break;
+		case 2: System.out.println("Search Patient by ID,Name,Phone or Age");
+				String attr=inputString();
+				System.out.println("Enter the Value:");
+				String val=inputString();
+				searchPatient(attr,val);
+			break;
+		case 3: System.out.println("Book Appointment");
+			
+		default:
+			break;
+		}
+	}
+
+	public static void searchPatient(String attr, String val) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void searchDoctor(String attribute, String value) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

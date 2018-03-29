@@ -16,8 +16,8 @@ public class OrderedList {
 		OrderedLinkedList<Integer> list;
 		list= Utility.OrderreadFileAndAddInList("/home/bridgeit/workspace/Files/NumberList");
 		System.out.println("\nEnter the element to search");
-	
 		String search=Utility.inputString();
+		
 		list=Utility.searchInListOrder(list, search);
 		Utility.OrderreadListWriteInFile("/home/bridgeit/workspace/Files/NumberList",list);	
 	}
