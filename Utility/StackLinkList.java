@@ -9,7 +9,7 @@ public boolean isEmpty()
 		return true;
 	return false;
 }
-void insert(Object data)
+public void insert(Object data)
 {
 	Node3 newnode=new Node3(data);
 	if(isEmpty())
@@ -22,8 +22,9 @@ void insert(Object data)
 	}
 	top=newnode;
 	size++;
+//	System.out.println(top.data);
 }
-Object delete()
+public Object delete()
 {
 	Node3 temp = null;
 	if(isEmpty())
@@ -36,9 +37,10 @@ Object delete()
 		top=temp.linkNext;
 		size--;
 	}
+	//System.out.println(temp.data);
 	return temp.data;
 }
-void display()
+public void display()
 {
 	if(isEmpty())
 	{
