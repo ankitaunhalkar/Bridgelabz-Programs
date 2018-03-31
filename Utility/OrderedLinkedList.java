@@ -20,6 +20,7 @@ public class OrderedLinkedList<N extends Comparable<N>>
 			this.next=null;
 		}
 	}
+	
 	public void add(N item)
 	{
 		Node1<N> newnode=new Node1<N>(item);
@@ -58,6 +59,8 @@ public class OrderedLinkedList<N extends Comparable<N>>
         }
         size++;
 	}
+	
+	
 	public void remove(N item) 
 	{
 		if(head==null)
@@ -105,6 +108,28 @@ public class OrderedLinkedList<N extends Comparable<N>>
 				add(item);
 			}
 	}
+	
+	public boolean search1(N item) 
+	{
+		Node1<N> temp=head;
+		boolean status=false;
+			while(temp!=null)
+			{
+				status=false;
+				if(temp.data==item)
+				{
+					status=true;
+					System.out.println("Found in list");
+					break;
+				}	
+				temp=temp.next;
+			}
+			if(status)
+				return true;
+			else
+				return false;
+	}
+	
 	public int size() 
 	{
 		int count=0;
@@ -199,7 +224,7 @@ public class OrderedLinkedList<N extends Comparable<N>>
 		}
 		size--;
 	}
-	public void pop(int pos) 
+	public N pop(int pos) 
 	{
 		if(pos>size()-1 || pos<1)
 		{
@@ -208,8 +233,9 @@ public class OrderedLinkedList<N extends Comparable<N>>
 		if(pos==1)
 		{
 			Node1<N> temp=head;
-			head=head.next;
+			head=temp.next;
 			temp.next=null;
+			return temp.data;
 		}
 		else
 		{
@@ -223,6 +249,7 @@ public class OrderedLinkedList<N extends Comparable<N>>
 			Node1<N> current=previous.next;
 			previous.next=current.next;
 			current.next=null;
+			return current.data;
 		}
 	}
 	void printList()
@@ -240,15 +267,13 @@ public class OrderedLinkedList<N extends Comparable<N>>
 		list.add(5);
 		list.add(9);
 		list.printList();
-		list.search(5);
+		//list.search(5);
 //		list.append(10);
 	/*	list.printList();
 		list.index(9);
 		list.insertAt(2, 12);
-		list.pop();
-		list.pop(1);*/
-		list.printList();
-
-	
+		list.pop();*/
+		//list.pop(0);
+		//list.printList();
 	}
 }

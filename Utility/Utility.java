@@ -7,9 +7,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
 import org.json.simple.JSONArray;
@@ -432,25 +435,15 @@ public  class Utility {
 	}
 	
 //Method for Anagram String
-	public static void anagram(String str1, String str2) 
+	public static boolean anagram(String str1, String str2) 
 	{
-		int stringLen1=str1.length();
-		int stringLen2=str2.length();
-		boolean status = false;
-		if(stringLen1==stringLen2)
-		{
-			for(int i=0;i<stringLen1;i++)
-			{
-				for(int j=0;j<=i;j++)
-				{
-					if(str1.charAt(i)==str2.charAt(j))
-					{
-						status=true;
-					}
-				}
-			}
-		}
-		if(status==true)
+		char[] string1=str1.toCharArray();
+		char[] string2=str2.toCharArray();
+		Arrays.sort(string1);
+		Arrays.sort(string2);
+		boolean isAnagram = Arrays.equals(string1, string2);
+		
+		if(isAnagram==true)
 		{
 			System.out.println(str1+" , "+str2+" are Anagram Strings");
 		}
@@ -458,6 +451,7 @@ public  class Utility {
 		{
 			System.out.println(str1+" , "+str2+" are not Anagram Strings");
 		}
+		return isAnagram;
 	}
 //To check number is prime or not
 	public static boolean isPrime (int number) {
@@ -472,9 +466,10 @@ public  class Utility {
 //Method for Prime Numbers
 	public static int[] primeNumbers(int n) 
 	{
+		
 		 int[] primes = new int[n];
-	      int ncounter = 0;
-	      int isPrime = 2;
+		 int ncounter = 0;
+	     int isPrime = 2;
 	      while( ncounter < n){
 	        boolean prime = true;
 	        for (int j=2; j<isPrime; j++){
@@ -495,9 +490,11 @@ public  class Utility {
 //Method to display array
 	public static void display(int array[]) 
 	{
+		
 		for (int i = 0; i < array.length; i++) {
 			System.out.print(array[i]+" ");
 		}
+		System.out.println();
 	}
 
 //Method to find prime anagram
@@ -507,7 +504,7 @@ public  class Utility {
 		{
 			for(int j=i+1;j<len;j++)
 			{
-				//System.out.println(out[i]+" "+out[j]);
+				System.out.println(out[i]+" "+out[j]);
 				AnagramInteger(out[i],out[j]);
 			}
 		}
@@ -515,41 +512,10 @@ public  class Utility {
 	}
 //Method for integer anagram
 	public static void AnagramInteger(int n1, int n2) {
-		//System.out.println(n1+ " " +n2);
-		int size=8;
-		int num1=n1;int num2=n2;
-		long binary_a[]=new long[10];
-		long binary_b[]=new long[10];
-		int i=0;
-		 Arrays.fill(binary_a, 0);
-		while(n1>0)
-		{
-			binary_a[i]=n1%2;
-			n1/=2;
-			i++;
-		}
-		int j=0;
-		 Arrays.fill(binary_b, 0);
-		while(n2>0)
-		{
-			binary_b[j]=n2%2;
-			n2/=2;
-			j++;
-		}
-		Arrays.sort(binary_a);
-		Arrays.sort(binary_b);
-		for (int j2 = 0; j2 < size; j2++) {
-			if(binary_a[i]==binary_b[i])
-			{
-				System.out.println(num1+" "+num2+"is not a angram");
-			}
-			else
-			{
-				System.out.println(num1+" "+num2+"is a angram");	
-			}
-		}
-		
-		
+	
+		String num1=String.valueOf(n1);
+		String num2=String.valueOf(n2);
+		anagram(num1, num2);
 	}
 	
 //Method to find Palindrome
@@ -1210,12 +1176,15 @@ public  class Utility {
 		result=value/(num+1);
 		return result;
 	}
-	public static void Prime2D()
+	
+//Method for 2D Prime Array
+	public static int[][] Prime2D()
 	{
-		int[][] a=new int[10][25];
-		int b[]=new int[500];
+		int[][] a=new int[10][30];
+		int b[]=new int[250];
 		int k=0;
 		int c=0;
+				
 		while(c<250)
 		{
 			if(isPrime(k))
@@ -1228,21 +1197,46 @@ public  class Utility {
 		int v=0;
 		for(int i=0;i<10;i++)
 		{
-			for(int j=0;j<25;j++)
+			int max=100;
+			for(int j=0;j<30;j++)
 			{
-				a[i][j]=b[v];
-				v++;
+				if(b[v]<(i+1)*max)
+				{
+					a[i][j]=b[v];
+					v++;
+				}
 			}
-			
 		}
 		for(int i=0;i<10;i++)
 		{
-			for(int j=0;j<25;j++)
-			{
-				System.out.print(a[i][j]+" ");
-			}
-			System.out.println();
+				for(int j=0;j<30;j++)
+				{	
+					if(a[i][j]>0)
+					{
+						System.out.print(a[i][j]+"\t");	
+					}
+				}
+				System.out.println();
 		}
+		return a;
+	}
+//Method for 2D Prime Anagram
+	public static void PrimeAnagram2D() {
+		int a[][]=Prime2D();
+		System.out.println(a.length);
+		int b[]=new int[250];int k=0;
+		for(int i=0;i<a.length;i++)
+		{
+			for (int j = 0; j < a[i].length; j++) {
+				if(a[i][j]>0)
+				{
+				b[k]=a[i][j];
+				//System.out.println(b[k]);
+				k++;
+				}
+			}
+		}
+		FindAnagram(b);
 	}
 //Method for CalendarQueue
 	public static void CalendarQueue(int month,int year) 
@@ -1693,7 +1687,7 @@ public  class Utility {
 		Iterator<?> iterate=array.iterator();
 		while(iterate.hasNext())
 		{
-		//s	JSONObject obj=(JSONObject) iterate.next();
+		//	JSONObject obj=(JSONObject) iterate.next();
 		}
 	}
 
@@ -2050,10 +2044,10 @@ public  class Utility {
 		JSONArray docArray=(JSONArray) parser.parse(docfile);
 		JSONObject doctor = null;
 		
-//Patient
+		//Patient
 		FileReader patfile= fileRead("/home/bridgeit/workspace/Files/Patient.json");
 		JSONArray patArray=(JSONArray) parser.parse(patfile);
-//Appointment
+		//Appointment
 		FileReader appointfile= fileRead("/home/bridgeit/workspace/Files/Appointment.json");
 		JSONArray appointArray=(JSONArray) parser.parse(appointfile);
 		JSONObject appoint=new JSONObject();
@@ -2108,4 +2102,184 @@ public  class Utility {
 		cliniqueManagement();
 	}
 
+	public static void deckOfCard() {
+		String[] suits = {"Clubs", "Diamonds", "Hearts", "Spades"};
+	    
+	    String[] ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10","Jack", "Queen", "King", "Ace"};
+	    String array [][] = new String[4][9];
+	    // initialize deck
+	    int n = suits.length * ranks.length;
+	    String[] deck = new String[n];
+	    for (int i = 0; i < ranks.length; i++) 
+	    {
+	        for (int j = 0; j < suits.length; j++) 
+	        {
+	            deck[suits.length*i + j] = ranks[i] + "->" + suits[j];
+	        }
+	    }
+	
+	    // shuffle
+	    for (int i = 0; i < n; i++) 
+	    {
+	        int r = i + (int) (Math.random() * (n-i));
+	        String temp = deck[r];
+	        deck[r] = deck[i];
+	        deck[i] = temp;
+	    }
+	  // print shuffled deck
+	
+	    for (int i = 0; i < 4; i++)
+	    {
+	        for (int j = 0; j < 9; j++) 
+	        {
+	            array[i][j]=(deck[i + j * 4]);
+	        }
+	    }
+	    
+	    for(int i=0;i<array.length;i++)
+	    {
+	    	for(int j=0;j<array[i].length;j++)
+	    	{
+	    		System.out.print(array[i][j]+"\t");
+	    	}
+	    	System.out.println();
+	    }
+    
+	    System.out.println("--------------------------------");
+	   for (String outer[] : array) 
+	   {
+	       Arrays.sort(outer);
+
+	       for (String integer : outer) 
+	       {
+	          System.out.print(integer+"\t");
+	       }
+	       System.out.println();
+	   }
+	}
+
+	public static void  hashFunction() throws NumberFormatException, IOException {
+		HashMap<Integer, OrderedLinkedList<Integer>> hashMap= new HashMap<Integer, OrderedLinkedList<Integer>>();
+		intializeHash(hashMap);
+		readHashFile(hashMap);
+		searchHashNumber(hashMap);
+		
+	}
+
+	public static void searchHashNumber(HashMap<Integer, OrderedLinkedList<Integer>> hashMap) throws FileNotFoundException, UnsupportedEncodingException {
+		
+		System.out.print("Enter a number to search: ");
+		int search = inputInt();	//	number to be searched
+		
+		//	getting list in which the number should be
+		OrderedLinkedList<Integer> list = hashMap.get(search % 11);
+		if(list.search1(search)) {	//	file contains the number
+			System.out.println("File contains number. Removing it.");
+			list.remove(search);
+		}
+		else {	//	file does not contain the number
+			System.out.println("File does not contain the number. Adding it to the file.");
+			list.add(search);
+		}
+		PrintWriter printWriter = null;	// to write to the file
+		printWriter = new PrintWriter("/home/bridgeit/workspace/Files/Hash" , "UTF-8");
+		
+			for(int i = 0; i < 11; i++) 
+			{
+			list = hashMap.get(i);	//	getting lists
+			while(!list.isEmpty()) 
+			{
+				//	popping every element and adding to the file
+				printWriter.print(list.pop(0) + " ");
+			}			
+		}		
+			printWriter.close();
+	}
+
+	public static void readHashFile(HashMap<Integer, OrderedLinkedList<Integer>> hashMap) throws NumberFormatException, IOException {
+		FileReader fileread=fileRead("/home/bridgeit/workspace/Files/Hash");
+		BufferedReader br=new BufferedReader(fileread);
+		String line;
+		while((line=br.readLine())!=null)
+		{
+			String[] strings = line.split(",");	//	splits line into string array
+			for(String integers : strings) 
+			{
+				//	converts string into integer
+				int numberToAdd = Integer.parseInt(integers);
+				//	adds number to appropriate list
+				OrderedLinkedList<Integer> list = hashMap.get(numberToAdd % 11);
+				list.add(numberToAdd);
+			}
+		}
+	}
+
+	public static void intializeHash(HashMap<Integer, OrderedLinkedList<Integer>> hashMap) {
+		for(int i=0;i<11;i++)
+		{
+			hashMap.put(i, new OrderedLinkedList<Integer>());
+		}
+	}
+
+	public static void deckOfCardQueue() {
+		String[] suits = {"Clubs", "Diamonds", "Hearts", "Spades"};
+	    String[] ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10","Jack", "Queen", "King", "Ace"};
+	    String array [][] = new String[4][9];
+	    QueueLinkList q=new QueueLinkList();
+	    // initialize deck
+	    int n = suits.length * ranks.length;
+	    String[] deck = new String[n];
+	    for (int i = 0; i < ranks.length; i++) 
+	    {
+	        for (int j = 0; j < suits.length; j++) 
+	        {
+	            deck[suits.length*i + j] = ranks[i] + "->" + suits[j];
+	        }
+	    }
+	
+	    // shuffle
+	    for (int i = 0; i < n; i++) 
+	    {
+	        int r = i + (int) (Math.random() * (n-i));
+	        String temp = deck[r];
+	        deck[r] = deck[i];
+	        deck[i] = temp;
+	    }
+	  // print shuffled deck
+	
+	    for (int i = 0; i < 4; i++)
+	    {
+	        for (int j = 0; j < 9; j++) 
+	        {
+	            array[i][j]=(deck[i + j * 4]);
+	            q.insert(array[i][j]+"\t");
+	           
+	        }
+	        q.insert("\n");
+	    }
+	    q.display();
+	  /*  for(int i=0;i<array.length;i++)
+	    {
+	    	for(int j=0;j<array[i].length;j++)
+	    	{
+	    		//System.out.print(array[i][j]+"\t");
+	    		
+	    	}
+	    	System.out.println();
+	    }*/
+    
+	    System.out.println("--------------------------------");
+	  /*for (String outer[] : array) 
+	   {
+	       Arrays.sort(outer);
+	      for (String integer : outer) 
+	       {
+	    	 q.insert(integer+"\t");
+	         // System.out.print(integer+"\t");
+	       }
+	       q.insert("\n");
+	       //System.out.println();
+	   }
+	   q.display();*/
+	}	
 }
