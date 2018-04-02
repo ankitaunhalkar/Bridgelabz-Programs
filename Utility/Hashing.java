@@ -5,7 +5,7 @@ public class Hashing {
 	/**
 	 * @param args
 	 */
-	OrderedLinkedList<Integer> s0,s1,s2,s3,s4,s5,s6,s7,s8,s9,s10;
+	/*OrderedLinkedList<Integer> s0,s1,s2,s3,s4,s5,s6,s7,s8,s9,s10;
 	public Hashing() {
 		s0=new OrderedLinkedList<Integer>();
 		s1=new OrderedLinkedList<Integer>();
@@ -181,5 +181,5 @@ public class Hashing {
 				i++;
 			}
 			return a;
-	}
+	}*/
 }
