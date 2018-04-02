@@ -12,6 +12,7 @@ public class AnagramDetection {
 		System.out.println("Enter String 2:");
 		String str2=Utility.inputStringLine().toLowerCase().replaceAll("\\s", "");
 		Utility.anagram(str1, str2);
+		
 	}
 
 }

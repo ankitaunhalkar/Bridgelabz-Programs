@@ -435,7 +435,7 @@ public  class Utility {
 	}
 	
 //Method for Anagram String
-	public static boolean anagram(String str1, String str2) 
+	public static void anagram(String str1, String str2) 
 	{
 		char[] string1=str1.toCharArray();
 		char[] string2=str2.toCharArray();
@@ -446,12 +446,12 @@ public  class Utility {
 		if(isAnagram==true)
 		{
 			System.out.println(str1+" , "+str2+" are Anagram Strings");
+			
 		}
 		else
-		{
+		
 			System.out.println(str1+" , "+str2+" are not Anagram Strings");
-		}
-		return isAnagram;
+		
 	}
 //To check number is prime or not
 	public static boolean isPrime (int number) {
@@ -466,25 +466,39 @@ public  class Utility {
 //Method for Prime Numbers
 	public static int[] primeNumbers(int n) 
 	{
+			int a[]=new int[n];int k=0;
+			for(int i=0;i<n;i++)
+			{
+				if(isPrime(i))
+				{
+					a[k]=i;
+					k++;
+				}
+			}
+			int len=0;
+			for (int i=0; i<a.length; i++)
+			    {
+			        if (a[i] != 0)
+			            len++;
+			    }
+			    
+			    int [] newArray = new int[len];
+			    int j=0;
+			    for (int i=0; i<a.length; i++)
+			    {
+			        if (a[i] != 0) {
+			            newArray[j] = a[i];
+			            j++;
+			        }
+			    }
+			    System.out.println();
+			   
+			  /*  for (int integer : newArray) {
+					System.out.println(integer);
+				} */
+			return newArray;
+			
 		
-		 int[] primes = new int[n];
-		 int ncounter = 0;
-	     int isPrime = 2;
-	      while( ncounter < n){
-	        boolean prime = true;
-	        for (int j=2; j<isPrime; j++){
-	          if (isPrime%j ==0){
-	            prime = false;
-	            break;
-	          }
-	        }
-	        if (prime){
-	          primes[ncounter] = isPrime;
-	          ncounter++;
-	        } 
-	        isPrime++;
-	       }
-	      return primes;
 	}
 
 //Method to display array
@@ -500,11 +514,12 @@ public  class Utility {
 //Method to find prime anagram
 	public static void FindAnagram(int[] out) {
 		int len=out.length;
+		
 		for(int i=0;i<len;i++)
 		{
 			for(int j=i+1;j<len;j++)
 			{
-				System.out.println(out[i]+" "+out[j]);
+				//System.out.println(out[i]+" "+out[j]);
 				AnagramInteger(out[i],out[j]);
 			}
 		}
@@ -516,6 +531,7 @@ public  class Utility {
 		String num1=String.valueOf(n1);
 		String num2=String.valueOf(n2);
 		anagram(num1, num2);
+		
 	}
 	
 //Method to find Palindrome
@@ -1206,13 +1222,17 @@ public  class Utility {
 					v++;
 				}
 			}
-		}
+		}//int start=0;
 		for(int i=0;i<10;i++)
-		{
+		{	//int s=i*100;
+		
+		//System.out.print((start)+"-"+(s)+" ");
+			//start=s+1;
 				for(int j=0;j<30;j++)
 				{	
 					if(a[i][j]>0)
 					{
+						
 						System.out.print(a[i][j]+"\t");	
 					}
 				}
@@ -1222,21 +1242,7 @@ public  class Utility {
 	}
 //Method for 2D Prime Anagram
 	public static void PrimeAnagram2D() {
-		int a[][]=Prime2D();
-		System.out.println(a.length);
-		int b[]=new int[250];int k=0;
-		for(int i=0;i<a.length;i++)
-		{
-			for (int j = 0; j < a[i].length; j++) {
-				if(a[i][j]>0)
-				{
-				b[k]=a[i][j];
-				//System.out.println(b[k]);
-				k++;
-				}
-			}
-		}
-		FindAnagram(b);
+				
 	}
 //Method for CalendarQueue
 	public static void CalendarQueue(int month,int year) 
@@ -1401,27 +1407,21 @@ public  class Utility {
 	public static void StockAccount() throws IOException, ParseException 
 	{
 		System.out.println("Enter Your Chocie");
-		System.out.println("1.Create a new Account\n2.Buy Shares\n3.Sell Shares\n4.Save Account\n5.Print Report");
+		System.out.println("1.Create a new Account\n2.Buy Shares\n3.Sell Shares\n4.Print Report");
 		int choice=Utility.inputInt();
 		switch(choice)
 		{
 		case 1: System.out.println("Creating Account");
-				createAccount();
+				createAcc();
 				break;
 		
 		case 2: System.out.println("You are buying Shares");
-				System.out.println("Enter the Symbol:");
-				String symbol=Utility.inputString();
-				System.out.println("Enter the amount:");
-				int amount=Utility.inputInt();
-				buyShare(symbol,amount);
+				
+				buyShare();
 				break;
 		case 3: System.out.println("You are selling shares");
-				System.out.println("Enter the Sysmbol:");
-				String symbol1=Utility.inputString();
-				System.out.println("Enter the amount:");
-				int amount1=Utility.inputInt();
-				sellShare(symbol1,amount1);
+				
+				sellShare();
 				break;
 		case 4: System.out.println("Print Report");
 		 		printReport();
@@ -1431,6 +1431,228 @@ public  class Utility {
 		
 	}
 
+	@SuppressWarnings("unchecked")
+	public static void sellShare() throws IOException, ParseException 
+	{
+		File file = new File("/home/bridgeit/workspace/Files/customerShare.json");
+		File file1 =new File("/home/bridgeit/workspace/Files/companyStock.json");
+		if(file.exists() && file1.exists())
+		{
+			Scanner scan = new Scanner(System.in);
+			// reading stock file
+			FileReader fr = new FileReader(file);
+			JSONParser parser = new JSONParser();
+			JSONArray stock = (JSONArray) parser.parse(fr);
+			//reading share file
+			
+			FileReader sf = new FileReader(file1);
+			JSONParser parser1 = new JSONParser();
+			JSONArray share = (JSONArray) parser1.parse(sf);
+			
+			System.out.println("Enter the user");
+			String name = scan.nextLine();
+			Iterator<?> itr = stock.iterator();
+			Iterator<?> itr1 = share.iterator();
+			boolean flag = false;
+			while (itr.hasNext())
+			{
+				JSONObject obj=(JSONObject) itr.next();
+				if(obj.get("Name").equals(name))
+				{
+					System.out.println("Enter the share sysmbol to sale share:[@,!,#]");
+					String sym = scan.nextLine();
+					System.out.println("Enter the number of share to sale");
+					int count= scan.nextInt();
+					//obj.put("Share Symbol", sym);
+					while(itr1.hasNext())
+					{
+						JSONObject obj1 = (JSONObject) itr1.next();
+						if(obj1.get("Symbol").equals(sym))
+						{	
+							int bal =  Integer.parseInt(obj.get("Balance").toString());
+							int price = Integer.parseInt(obj1.get("Price").toString());
+							int noShare =  Integer.parseInt(obj.get("ShareCount").toString());
+							int stockShare = Integer.parseInt(obj1.get("Count").toString());
+							int saleprize = count*price;
+							int newbal = bal+saleprize;
+							int sharecountcus = noShare-count;
+							int sharecountstock = stockShare+count;
+							obj.remove("Balance");
+							obj.remove("ShareCount");
+							obj1.remove("Count");
+							
+							obj.put("Balance",newbal);
+							obj.put("ShareCount",sharecountcus);
+							obj1.put("Count", sharecountstock);
+							Date d = new Date();
+							String date = new SimpleDateFormat("E yyyy.MM.dd 'at' hh:mm:ss a").format(d);
+							System.out.println("Date "+date);
+							flag = true;
+							break;
+						}
+						
+					}
+				}
+
+				FileWriter fs = new FileWriter(file);
+				fs.write(JSONValue.toJSONString(stock));
+				fs.flush();
+				fs.close();
+			}
+			if(flag == false)
+			{
+				System.out.println("User name not exits");
+			}
+			FileWriter fw = new FileWriter(file1);
+			fw.write(JSONValue.toJSONString(share));
+			fw.flush();
+			fw.close();
+		}
+		else
+		{
+			System.out.println("File Does not exits");
+		}
+	}
+
+	
+	@SuppressWarnings("unchecked")
+	public static void buyShare() throws IOException, ParseException 
+	{
+		File file = new File("/home/bridgeit/workspace/Files/customerShare.json");
+		File file1 =new File("/home/bridgeit/workspace/Files/companyStock.json");
+		if(file.exists() && file1.exists())
+		{
+			
+			// reading stock file
+			FileReader fr = new FileReader(file);
+			JSONParser parser = new JSONParser();
+			JSONArray stock = (JSONArray) parser.parse(fr);
+			//reading share file
+			
+			FileReader sf = new FileReader(file1);
+			JSONParser parser1 = new JSONParser();
+			JSONArray share = (JSONArray) parser1.parse(sf);
+			
+			System.out.println("Enter the user");
+			String name = inputString();
+			Iterator<?> itr = stock.iterator();
+			Iterator<?> itr1 = share.iterator();
+			boolean flag = false;
+			while (itr.hasNext())
+			{
+				JSONObject obj=(JSONObject) itr.next();
+				if(obj.get("Name").equals(name))
+				{
+					System.out.println("Enter the share sysmbol to buy share:[@,!,#]");
+					String sym = inputString();
+					/*obj.put("Share symbol", sym);
+					if(obj.get("Share Symbol").equals(sym))
+					{*/
+						while(itr1.hasNext())
+						{
+							JSONObject obj1 = (JSONObject) itr1.next();
+							if(obj1.get("Symbol").equals(sym))
+							{	
+								System.out.println("Enter the amount");
+								int amt= inputInt();
+								int bal =  Integer.parseInt(obj.get("Balance").toString());
+								int price = Integer.parseInt(obj1.get("Price").toString());
+								int noShare =  Integer.parseInt(obj.get("ShareCount").toString());
+								int stockShare = Integer.parseInt(obj1.get("Count").toString());
+								int numofshare = amt/price;
+								int newbal = bal-amt;
+								int sharecountcus = noShare+numofshare;
+								int sharecountstock = stockShare-numofshare;
+								obj.remove("Balance");
+								obj.remove("ShareCount");
+								obj1.remove("Count");
+								
+								obj.put("Balance",newbal);
+								obj.put("ShareCount",sharecountcus);
+								obj1.put("Count", sharecountstock);
+								Date d = new Date();
+								String date = new SimpleDateFormat("E yyyy.MM.dd 'at' hh:mm:ss a").format(d);
+								System.out.println("Date "+date);
+								flag= true;
+								break;
+							}
+						}
+					//}
+					/*else
+					{
+						obj.put("Share symbol", sym);
+						flag= true;
+					}*/
+				}
+				FileWriter fs = new FileWriter(file);
+				fs.write(JSONValue.toJSONString(stock));
+				fs.flush();	
+				fs.close();
+			}
+			if(flag == false)
+			{
+				System.out.println("User name not exits");
+			}
+			FileWriter fw = new FileWriter(file1);
+			fw.write(JSONValue.toJSONString(share));
+			fw.flush();
+			fw.close();
+		}
+		else
+		{
+			System.out.println("File does not exits");
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public static void createAcc() throws IOException, ParseException 
+	{
+		File file = new File("/home/bridgeit/workspace/Files/companyStock.json");
+		if(file.exists())
+		{
+			@SuppressWarnings("unused")
+			JSONArray arr = new JSONArray();
+			
+			boolean check= true;
+			while (check==true)
+			{	
+				System.out.println("Want to add user: yes or no");
+				String ch = inputString(); 
+				if(ch.equals("yes"))
+				{	
+					
+					FileReader fr = new FileReader(file);
+					JSONParser parser = new JSONParser();
+					JSONArray arr1 = (JSONArray) parser.parse(fr);
+					JSONObject json = new JSONObject();
+			        System.out.println("Enter name");
+			        String name = inputString();
+			        System.out.println("Enter balance");
+			        int bal = inputInt();
+			        json.put("Name",name);
+			        json.put("Balance",bal);
+			        json.put("ShareCount", 100);
+			    
+			        arr1.add(json);
+			      	FileWriter fw = new FileWriter(file);
+			        fw.write(JSONArray.toJSONString(arr1));
+			        fw.flush();
+			        fw.close();
+		
+				}
+				else
+				{
+					check=false;
+				}
+			}
+			
+		}
+		else
+		{
+			System.out.println("File does not exits");
+		}
+		StockAccount();
+	}
 	public static void printReport() throws IOException, ParseException {
 		FileReader file=fileRead("/home/bridgeit/workspace/Files/customerShare.json");	
 		JSONParser parser=new JSONParser();
@@ -1442,219 +1664,9 @@ public  class Utility {
 			System.out.println(shareobj);
 		}
 		
-	}
+}
 
-	@SuppressWarnings("unchecked")
-	public static void sellShare(String symbol, int amount) throws IOException, ParseException
-	{
-		File companyStock=new File("/home/bridgeit/workspace/Files/companyStock.json");
-		File customerShare=new File("/home/bridgeit/workspace/Files/customerShare.json");
-		if(companyStock.exists() && customerShare.exists())
-		{
-				//Stock reading
-				FileReader fr=new FileReader(companyStock);
-				JSONParser parse=new JSONParser();
-				JSONArray stockArray=(JSONArray) parse.parse(fr);
-				//JSONObject stock=new JSONObject();
-			
-			
-				//Share reading
-				FileReader fr1=new FileReader(customerShare);
-				JSONParser par=new JSONParser();
-				JSONArray shareArray = (JSONArray) par.parse(fr1);
-				//JSONObject share=new JSONObject();
-				
-				System.out.println("Enter Name:");
-				String name=inputString();
-				Iterator<?> iterateStock = stockArray.iterator();
-				Iterator<?> iterateShare = shareArray.iterator();
-				while(iterateShare.hasNext())
-				{
-					JSONObject shareobj=(JSONObject) iterateShare.next();
-					
-					if(name.equals(shareobj.get("name")));
-					{
-								while(iterateStock.hasNext())
-								{
-									JSONObject stockobj=(JSONObject) iterateStock.next();
-									System.out.println(stockobj);
-									if(symbol.equals(stockobj.get("Symbol")))
-									{
-										int price=Integer.parseInt(stockobj.get("Price").toString());
-										int balance=Integer.parseInt(shareobj.get("Balance").toString());
-										System.out.println(price+" "+balance);
-										if(price>=amount)
-										{
-											int countStock=Integer.parseInt(stockobj.get("NumShare").toString());
-											int countShare=Integer.parseInt(shareobj.get("ShareCount").toString());
-											int numShare=amount*price;
-											int newbal=balance+amount;
-											int shareCount=countShare+numShare;
-											int stockCount = countStock-numShare;
-											
-											System.out.println(stockArray);
-											System.out.println(shareArray);
-											
-											stockobj.remove("NumShare");
-											shareobj.remove("Balance");
-											shareobj.remove("ShareCount");
-											
-											stockobj.put("NumShare",stockCount);
-											shareobj.put("Balance", newbal);
-											shareobj.put("ShareCount", shareCount);
-											
-											Date d=new Date();
-											String date=new SimpleDateFormat().format(d);
-											stockobj.put("Date", date);
-										}
-									}
-								}
-					}
-					
-				}
-				System.out.println();
-				FileWriter fw=new FileWriter(companyStock);
-				fw.write(JSONValue.toJSONString(stockArray));
-				fw.flush();
-				fw.close();
-							
-				FileWriter fw1=new FileWriter(customerShare);
-				fw1.write(JSONValue.toJSONString(shareArray));
-				fw1.flush();
-				fw1.close();
-		}	
-		
-	}
-
-	@SuppressWarnings("unchecked")
-	public static void buyShare(String symbol, int amount) throws IOException, ParseException
-	{
-		File companyStock=new File("/home/bridgeit/workspace/Files/companyStock.json");
-		File customerShare=new File("/home/bridgeit/workspace/Files/customerShare.json");
-		if(companyStock.exists() && customerShare.exists())
-		{
-				//Stock reading
-				FileReader fr=new FileReader(companyStock);
-				JSONParser parse=new JSONParser();
-				JSONArray stockArray=(JSONArray) parse.parse(fr);
-				//JSONObject stock=new JSONObject();
-			
-			
-				//Share reading
-				FileReader fr1=new FileReader(customerShare);
-				JSONParser par=new JSONParser();
-				JSONArray shareArray = (JSONArray) par.parse(fr1);
-				//JSONObject share=new JSONObject();
-				
-				System.out.println("Enter Name:");
-				String name=inputString();
-				Iterator<?> iterateStock = stockArray.iterator();
-				Iterator<?> iterateShare = shareArray.iterator();
-				while(iterateShare.hasNext())
-				{
-					JSONObject shareobj=(JSONObject) iterateShare.next();
-					
-					if(name.equals(shareobj.get("name")));
-					{
-								while(iterateStock.hasNext())
-								{
-									JSONObject stockobj=(JSONObject) iterateStock.next();
-									System.out.println(stockobj);
-									if(symbol.equals(stockobj.get("Symbol")))
-									{
-										int price=Integer.parseInt(stockobj.get("Price").toString());
-										int balance=Integer.parseInt(shareobj.get("Balance").toString());
-										System.out.println(price+" "+balance);
-										if(price>=amount)
-										{
-											int countStock=Integer.parseInt(stockobj.get("NumShare").toString());
-											int countShare=Integer.parseInt(shareobj.get("ShareCount").toString());
-											int numShare=amount/price;
-											int newbal=balance-amount;
-											int shareCount=countShare+numShare;
-											int stockCount = countStock-numShare;
-											
-											System.out.println(stockArray);
-											System.out.println(shareArray);
-											
-											stockobj.remove("NumShare");
-											shareobj.remove("Balance");
-											shareobj.remove("ShareCount");
-											
-											stockobj.put("NumShare",stockCount);
-											shareobj.put("Balance", newbal);
-											shareobj.put("ShareCount", shareCount);
-											
-											Date d=new Date();
-											String date=new SimpleDateFormat().format(d);
-											stockobj.put("Date", date);
-										}
-									}
-								}
-					}
-					
-				}
-				System.out.println();
-				FileWriter fw=new FileWriter(companyStock);
-				fw.write(JSONValue.toJSONString(stockArray));
-				fw.flush();
-				fw.close();
-				
-				
-				FileWriter fw1=new FileWriter(customerShare);
-				fw1.write(JSONValue.toJSONString(shareArray));
-				fw1.flush();
-				fw1.close();
-		}	
-		
-	}
-
-
-	@SuppressWarnings({ "unchecked"})
-	public static void createAccount() throws IOException, ParseException {
-		File customerFile=new File("/home/bridgeit/workspace/Files/customerShare.json");
-		if(customerFile.exists())
-		{
-		
-			while(true)
-			{
-				System.out.println("Ready to create account? Yes or No");
-				if(inputString().equals("yes"))
-				{
-				FileReader fr=new FileReader(customerFile);
-
-				JSONParser parse=new JSONParser();
-				JSONArray jarray=(JSONArray) parse.parse(fr);
-				JSONObject jobject=new JSONObject();
-				
-				System.out.println("Enter Your Name:");
-				String name=inputString();
-				System.out.println("Enter the Balance:");
-				int balance=inputInt();
-				System.out.println("Enter the share count:");
-				int shareCount=inputInt();
-				
-				jobject.put("Name", name);
-				jobject.put("Balance", balance);
-				jobject.put("ShareCount", shareCount);
-				jarray.add(jobject);
-				
-				FileWriter fw=new FileWriter(customerFile);
-				fw.write(jarray.toString());
-				System.out.println(jarray);
-				fw.flush();
-				fw.close();
-				}
-				else
-				{
-					System.out.println("Thank You");
-					break;
-				}
-			}		
-		}
-		StockAccount();
-	}
-
+//Methods for address book
 	public static void addressBook() throws IOException, ParseException {
 		System.out.println("Enter the choice:\n1.Add\n2.Edit\n3.Delete");
 		int choice=Utility.inputInt();
@@ -1801,7 +1813,7 @@ public  class Utility {
 		System.out.println("Welcome to Clinique Management");
 		System.out.println("Press the number, you would like to choose!");
 		System.out.println("1.Add Doctor\n2.Add Patient\n3.Search Doctor\n4.Search Patient\n5.Book Appointment" +
-				"\n6.Show Patient\n7.Show Doctor\n8.Show Appointment\n9.Remove Appointment");
+				"\n6.Show Patient\n7.Show Doctor\n8.Show Appointment\n");
 		int choice=inputInt();
 		switch (choice) {
 		case 1: addDoctor();
@@ -1820,8 +1832,6 @@ public  class Utility {
 				break;
 		case 8: showAppointment();
 				break;
-		case 9: removeAppointment();
-				break;
 		default:
 			break;
 		}
@@ -1836,71 +1846,6 @@ public  class Utility {
 			JSONObject app=(JSONObject) iterate.next();
 			System.out.println(app);
 		}
-		cliniqueManagement();
-	}
-
-	@SuppressWarnings("unchecked")
-	public static void removeAppointment() throws IOException, ParseException {
-		JSONParser parser=new JSONParser();
-		//Doctor
-		FileReader docfile= fileRead("/home/bridgeit/workspace/Files/Doctor.json");
-		JSONArray docArray=(JSONArray) parser.parse(docfile);
-		JSONObject doctor = null;
-
-		//Appointment
-		FileReader appointfile= fileRead("/home/bridgeit/workspace/Files/Appointment.json");
-		JSONArray appointArray=(JSONArray) parser.parse(appointfile);
-		JSONObject appoint=null;
-		
-		System.out.println("Enter Patient ID:");
-		String pid=inputString();
-		
-		System.out.println("Enter the doctor name:");
-		String dname=inputString();
-		
-		Iterator<?> iterator=appointArray.iterator();
-		while(iterator.hasNext())
-		{
-			appoint=(JSONObject) iterator.next();
-			if(pid.equals(appoint.get("PID")) && dname.equals(appoint.get("DName")))
-			{
-				appoint.remove("PID");
-				appoint.remove("DName");
-				//appoint.remove(appoint);
-				//System.out.println(appoint);
-				Iterator<?> iterator2=docArray.iterator();
-				while(iterator2.hasNext())
-				{
-					doctor=(JSONObject) iterator2.next();
-					if(dname.equals(doctor.get("Name")))
-					{
-						int dcount=Integer.parseInt(doctor.get("Count").toString());
-						if(dcount<=5 && dcount>0)
-						{
-						
-						
-						dcount--;
-						doctor.remove("Count");
-						doctor.put("Count", dcount);
-						System.out.println(doctor);
-						}
-						else
-						{
-							System.out.println("No Appointment found!");
-						}
-					}
-				}
-			}
-		}
-		FileWriter appointwrite=fileWrite("/home/bridgeit/workspace/Files/Appointment.json");
-		appointwrite.write(JSONValue.toJSONString(appointArray));
-		appointwrite.flush();
-		appointwrite.close();
-		
-		FileWriter doctorwrite=fileWrite("/home/bridgeit/workspace/Files/Doctor.json");
-		doctorwrite.write(JSONValue.toJSONString(docArray));
-		doctorwrite.flush();
-		doctorwrite.close();
 		cliniqueManagement();
 	}
 
@@ -2144,18 +2089,7 @@ public  class Utility {
 	    	}
 	    	System.out.println();
 	    }
-    
-	    System.out.println("--------------------------------");
-	   for (String outer[] : array) 
-	   {
-	       Arrays.sort(outer);
-
-	       for (String integer : outer) 
-	       {
-	          System.out.print(integer+"\t");
-	       }
-	       System.out.println();
-	   }
+   
 	}
 
 	public static void  hashFunction() throws NumberFormatException, IOException {
@@ -2164,33 +2098,39 @@ public  class Utility {
 		readHashFile(hashMap);
 		searchHashNumber(hashMap);
 		
-	}
+}
 
-	public static void searchHashNumber(HashMap<Integer, OrderedLinkedList<Integer>> hashMap) throws FileNotFoundException, UnsupportedEncodingException {
+public static void searchHashNumber(HashMap<Integer, OrderedLinkedList<Integer>> hashMap) throws FileNotFoundException, UnsupportedEncodingException {
 		
 		System.out.print("Enter a number to search: ");
 		int search = inputInt();	//	number to be searched
 		
 		//	getting list in which the number should be
 		OrderedLinkedList<Integer> list = hashMap.get(search % 11);
-		if(list.search1(search)) {	//	file contains the number
+		
+		if(list.search1(search)) 
+		{	//	file contains the number
 			System.out.println("File contains number. Removing it.");
 			list.remove(search);
+		
 		}
-		else {	//	file does not contain the number
+		else
+		{	//	file does not contain the number
 			System.out.println("File does not contain the number. Adding it to the file.");
 			list.add(search);
+		
 		}
+		
 		PrintWriter printWriter = null;	// to write to the file
 		printWriter = new PrintWriter("/home/bridgeit/workspace/Files/Hash" , "UTF-8");
-		
 			for(int i = 0; i < 11; i++) 
 			{
 			list = hashMap.get(i);	//	getting lists
+			System.out.println(list);
 			while(!list.isEmpty()) 
 			{
 				//	popping every element and adding to the file
-				printWriter.print(list.pop(0) + " ");
+				printWriter.print(list + " ");
 			}			
 		}		
 			printWriter.close();
@@ -2219,7 +2159,7 @@ public  class Utility {
 		{
 			hashMap.put(i, new OrderedLinkedList<Integer>());
 		}
-	}
+}
 
 	public static void deckOfCardQueue() {
 		String[] suits = {"Clubs", "Diamonds", "Hearts", "Spades"};
@@ -2251,7 +2191,7 @@ public  class Utility {
 	    {
 	        for (int j = 0; j < 9; j++) 
 	        {
-	            array[i][j]=(deck[i + j * 4]);
+	            array[i][j]=deck[i + j * 4];
 	            q.insert(array[i][j]+"\t");
 	           
 	        }
@@ -2269,7 +2209,7 @@ public  class Utility {
 	    }*/
     
 	    System.out.println("--------------------------------");
-	  /*for (String outer[] : array) 
+	  for (String outer[] : array) 
 	   {
 	       Arrays.sort(outer);
 	      for (String integer : outer) 
@@ -2280,6 +2220,6 @@ public  class Utility {
 	       q.insert("\n");
 	       //System.out.println();
 	   }
-	   q.display();*/
+	   q.display();
 	}	
 }
