@@ -1,14 +1,16 @@
-package com.bridgelabz.ObjectOriented;
+package com.bridgelabz.DataStructures;
 
 import com.bridgelabz.Utility.Utility;
 
-public class DeckOfCard {
+public class StackPrimeAnagram {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		new Utility();
-		Utility.deckOfCard();
+		Utility.StackPrimeAnagram();
+
 	}
+
 }

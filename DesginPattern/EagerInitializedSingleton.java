@@ -1,0 +1,23 @@
+package com.bridgelabz.DesginPattern;
+
+public class EagerInitializedSingleton {
+
+	/**
+	 * @param args
+	 */
+	public static final EagerInitializedSingleton instance = new EagerInitializedSingleton();
+	
+	private EagerInitializedSingleton()
+	{
+		//System.out.println("dcbjb");
+	}
+	
+	public static EagerInitializedSingleton getInstance() 
+	{
+		return instance;
+	}
+	/*public static void main(String[] args) {
+		EagerInitializedSingleton st=new EagerInitializedSingleton();
+		
+	}*/
+}

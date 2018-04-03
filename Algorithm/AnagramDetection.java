@@ -11,7 +11,8 @@ public class AnagramDetection {
 		String str1=Utility.inputStringLine().toLowerCase().replaceAll("\\s", "");
 		System.out.println("Enter String 2:");
 		String str2=Utility.inputStringLine().toLowerCase().replaceAll("\\s", "");
-		Utility.anagram(str1, str2);
+		boolean status=Utility.Anagram(str1, str2);
+		Utility.displayangaram(status);
 		
 	}
 

@@ -10,11 +10,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
+
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.Set;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -37,6 +41,8 @@ public  class Utility {
     {
             return s.next();
     }
+    
+ 
 //To return String Input Line
     public static String inputStringLine()
     {
@@ -435,22 +441,22 @@ public  class Utility {
     }
    
 //Method for Anagram String
-    public static void anagram(String str1, String str2)
+    public static boolean Anagram(String str1, String str2)
     {
         char[] string1=str1.toCharArray();
         char[] string2=str2.toCharArray();
         Arrays.sort(string1);
         Arrays.sort(string2);
-        boolean isAnagram = Arrays.equals(string1, string2);
-       
+        boolean isAnagram =false;
+        isAnagram = Arrays.equals(string1, string2);
         if(isAnagram==true)
         {
-            System.out.println(str1+" , "+str2+" are Anagram Strings");
-           
+           //pSystem.out.println(str1+" , "+str2+" are Anagram Strings");
+        	 return isAnagram;
         }
         else
-       
-            System.out.println(str1+" , "+str2+" are not Anagram Strings");
+           //System.out.println(str1+" , "+str2+" are not Anagram Strings");
+        	  return isAnagram;
        
     }
 //To check number is prime or not
@@ -512,26 +518,36 @@ public  class Utility {
     }
 
 //Method to find prime anagram
-    public static void FindAnagram(int[] out) {
+    public static boolean FindAnagram(int[] out) {
         int len=out.length;
-       
+       boolean status=false;
         for(int i=0;i<len;i++)
         {
             for(int j=i+1;j<len;j++)
             {
                 //System.out.println(out[i]+" "+out[j]);
-                AnagramInteger(out[i],out[j]);
+            status=	 AnagramInteger(out[i],out[j]);
+           
             }
         }
-       
+       return status;
     }
+//Method to display anagram
+    public static void displayangaram(boolean status) {
+		if(status)
+		{
+			System.out.println("Is Anagram");
+		}
+		else
+			System.out.println("Is Not Anagram");
+	}
 //Method for integer anagram
-    public static void AnagramInteger(int n1, int n2) {
+    public static boolean AnagramInteger(int n1, int n2) {
    
         String num1=String.valueOf(n1);
         String num2=String.valueOf(n2);
-        anagram(num1, num2);
-       
+       boolean status= Anagram(num1, num2);
+       return status;
     }
    
 //Method to find Palindrome
@@ -1206,7 +1222,7 @@ public  class Utility {
     }
    
 //Method for 2D Prime Array
-    public static int[][] Prime2D()
+    public static int[] Prime2D()
     {
         int[][] a=new int[10][30];
         int b[]=new int[250];
@@ -1234,12 +1250,12 @@ public  class Utility {
                     v++;
                 }
             }
-        }int start=0;
+        }//int start=0;
         for(int i=0;i<10;i++)
-        {    int s=i*100;
+        {    //int s=i*100;
        
-        System.out.print((start)+"-"+(s)+" ");
-            start=s+1;
+        //System.out.print((start)+"-"+(s)+" ");
+            //start=s+1;
                 for(int j=0;j<30;j++)
                 {   
                     if(a[i][j]>0)
@@ -1250,12 +1266,111 @@ public  class Utility {
                 }
                 System.out.println();
         }
-        return a;
+        return b;
     }
 //Method for 2D Prime Anagram
-    public static void PrimeAnagram2D() {
-               
+    public static int[][] PrimeAnagram2D() {
+       int array[]=Prime2D();
+       int n1=0;
+       int n2=0;
+       int k=0;
+       boolean status=false;
+       int newarray[] = new int[300];
+       for(int i=0;i<array.length-1;i++)
+       {
+    	   for (int j = i+1; j < array.length; j++)
+    	   {
+    		   n1=array[i];
+    		   n2=array[j];
+    		   status=AnagramInteger(n1, n2);
+    		   if(status==true)
+    		   {
+    			   newarray[k++]=n1;
+    			   newarray[k++]=n2;
+    			   
+    		   }
+    	   }
+       }
+       int v=0;
+       int a[][]=new int[10][30];
+       for(int i=0;i<10;i++)
+       {
+           int max=100;
+           for(int j=0;j<30;j++)
+           {
+               if(array[v]<(i+1)*max)
+               {
+                   a[i][j]=newarray[v];
+                   v++;
+               }
+           }
+       }
+       System.out.println("-------------------------------");
+       System.out.println("Prime Numbers that are Anagram");
+       System.out.println("-------------------------------");
+       for(int i=0;i<10;i++)
+       {    
+               for(int j=0;j<30;j++)
+               {   
+                   if(a[i][j]>0 && a[i][j]<1000)
+                   {
+                      
+                       System.out.print(a[i][j]+"\t");   
+                   }
+               }
+               System.out.println();
+       }
+       return a;
     }
+ 
+ //Method for Prime Anagram in Stack
+    public static void StackPrimeAnagram() {
+    	
+		int array[][]=PrimeAnagram2D();
+		StackLinkList stack=new StackLinkList();
+		System.out.println("----------------------------------");
+		System.out.println("Prime Anagram in reverse order using Stack");
+		System.out.println("----------------------------------");
+		for (int i = 0; i < 10; i++) 
+		{
+			for (int j = 0; j < 30; j++) 
+			{
+				 if(array[i][j]>0 && array[i][j]<1000)
+                 {
+                    stack.insert(array[i][j]+"\t");
+                     //System.out.print(a[i][j]+"\t");   
+                 }
+				
+			}
+			 stack.insert("\n");
+		}
+		stack.display();
+	}
+ 
+ //Method for Prime Anagram in Queue
+public static void QueuePrimeAnagram() {
+    	
+		int array[][]=PrimeAnagram2D();
+		QueueLinkList queue=new QueueLinkList();
+		System.out.println("----------------------------------");
+		System.out.println("Prime Anagram using Queue");
+		System.out.println("----------------------------------");
+		for (int i = 0; i < 10; i++) 
+		{
+			for (int j = 0; j < 30; j++) 
+			{
+				 if(array[i][j]>0 && array[i][j]<1000)
+                 {
+                    queue.insert(array[i][j]+"\t");
+                     //System.out.print(a[i][j]+"\t");   
+                 }
+				
+			}
+			 queue.insert("\n");
+		}
+		queue.display();
+	}
+    
 //Method for CalendarQueue
     public static void CalendarQueue(int month,int year)
     {
@@ -1362,7 +1477,7 @@ public  class Utility {
         message=message.replace("XXXXXXXXXX", mobile);
         message=message.replace("XX/XX/XXXX", date);
         System.out.println(message);
-        }
+    }
 
 //Method for Stock Report
     public static void stockReport(FileReader fileread) throws IOException, ParseException
@@ -1523,6 +1638,7 @@ public  class Utility {
         {
             System.out.println("File Does not exits");
         }
+        StockAccount();
     }
 
    
@@ -1588,12 +1704,7 @@ public  class Utility {
                                 break;
                             }
                         }
-                    //}
-                    /*else
-                    {
-                        obj.put("Share symbol", sym);
-                        flag= true;
-                    }*/
+                   
                 }
                 FileWriter fs = new FileWriter(file);
                 fs.write(JSONValue.toJSONString(stock));
@@ -1613,6 +1724,7 @@ public  class Utility {
         {
             System.out.println("File does not exits");
         }
+        StockAccount();
     }
 
     @SuppressWarnings("unchecked")
@@ -1679,7 +1791,7 @@ public  class Utility {
 
 //Methods for address book
     public static void addressBook() throws IOException, ParseException {
-        System.out.println("Enter the choice:\n1.Add\n2.Edit\n3.Delete");
+        System.out.println("Enter the choice:\n1.Add\n2.Edit\n3.Delete\n4.Sort");
         int choice=Utility.inputInt();
         switch (choice) {
         case 1:addAddress();
@@ -1697,21 +1809,45 @@ public  class Utility {
             break;
         }
     }
-
-    public static void sortAddress() throws IOException, ParseException {
+    public static class Sort implements Comparator<Object> 
+	{
+		String str ;
+		public Sort(String str) 
+		{
+			this.str =str;
+		}
+	
+		public int compare(Object o1, Object o2) 
+		{
+			JSONObject obj1=(JSONObject)o1;  
+			JSONObject obj2=(JSONObject)o2;  
+			return (obj1.get(str).toString()).compareTo(obj2.get(str).toString());
+		}
+	
+	}
+    @SuppressWarnings("unchecked")
+	public static void sortAddress() throws IOException, ParseException {
         FileReader fr = new FileReader("/home/bridgeit/workspace/Files/AddressBook.json");
         JSONParser parser=new JSONParser();
         JSONArray array=(JSONArray) parser.parse(fr);
 
        
         System.out.println("Enter the attribute name through which you want sort:");
-    //    String attribute=inputString();
+       String attribute=inputString();
        
-        Iterator<?> iterate=array.iterator();
-        while(iterate.hasNext())
-        {
-        //    JSONObject obj=(JSONObject) iterate.next();
-        }
+       Collections.sort(array,new Sort(attribute));
+		Iterator<?> itr=array.iterator(); 
+		while (itr.hasNext())
+		{
+			JSONObject obj1 = (JSONObject) itr.next();
+			System.out.println("First Name : "+obj1.get("Firstname")+" "+"Last Name : "+obj1.get("Lastname")+" "+"Address: "+obj1.get("Address")+" "+"City : " +obj1.get("City")+" "+"State : "+obj1.get("State")+" "
+					+"Zip: "+obj1.get("Zip")+" "+"Mobile: "+obj1.get("Mobile"));
+		}
+		FileWriter fw = new FileWriter("/home/bridgeit/workspace/Files/AddressBook.json");
+       fw.write(JSONArray.toJSONString(array));
+       fw.flush();
+       fw.close();
+
     }
 
     public static void deleteAddress() throws IOException, ParseException {
@@ -1799,7 +1935,7 @@ public  class Utility {
         System.out.println("Enter Zip:");
         int zip=inputInt();
         System.out.println("Enter Phone Number:");
-        long phone=inputlong();
+        int phone=inputInt();
        
          person.put("Firstname", firstname);
          person.put("Lastname", lastname);
@@ -2063,6 +2199,7 @@ public  class Utility {
        
         String[] ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10","Jack", "Queen", "King", "Ace"};
         String array [][] = new String[4][9];
+       
         // initialize deck
         int n = suits.length * ranks.length;
         String[] deck = new String[n];
@@ -2078,6 +2215,7 @@ public  class Utility {
         for (int i = 0; i < n; i++)
         {
             int r = i + (int) (Math.random() * (n-i));
+            System.out.println(r);
             String temp = deck[r];
             deck[r] = deck[i];
             deck[i] = temp;
@@ -2100,23 +2238,37 @@ public  class Utility {
             }
             System.out.println();
         }
+       /* Arrays.sort(deck);
+       for (String string : deck) {
+		System.out.println(string);
+	}*/
   
     }
 
-    public static void  hashFunction() throws NumberFormatException, IOException {
+    public static void  hashFunction() throws NumberFormatException, IOException
+    {
         HashMap<Integer, OrderedLinkedList<Integer>> hashMap= new HashMap<Integer, OrderedLinkedList<Integer>>();
         intializeHash(hashMap);
-        display(hashMap);
-        readHashFile(hashMap);
-        searchHashNumber(hashMap);
       
-       
-}
+        readHashFile(hashMap);
 
-    public static void display(HashMap<Integer, OrderedLinkedList<Integer>> hashMap) {
-		
+        searchHashNumber(hashMap);  
+
+    }
+
+    public static void display(HashMap<Integer, OrderedLinkedList<Integer>> hashMap) 
+    {   
+    	Set<Integer> keys = hashMap.keySet();
+    	 System.out.println();
+        for (Integer key : keys) {
+        	OrderedLinkedList<Integer> value=hashMap.get(key);
+            System.out.print(key +"-->");
+            value.list();
+            System.out.println();
+        }
 	}
-public static void searchHashNumber(HashMap<Integer, OrderedLinkedList<Integer>> hashMap) throws FileNotFoundException, UnsupportedEncodingException {
+    
+    public static void searchHashNumber(HashMap<Integer, OrderedLinkedList<Integer>> hashMap) throws FileNotFoundException, UnsupportedEncodingException {
        
         System.out.print("Enter a number to search: ");
         int search = inputInt();    //    number to be searched
@@ -2134,10 +2286,11 @@ public static void searchHashNumber(HashMap<Integer, OrderedLinkedList<Integer>>
         {    //    file does not contain the number
             System.out.println("File does not contain the number. Adding it to the file.");
             list.add(search);
+           
         }
-    
+        display(hashMap);
         PrintWriter printWriter = null;    // to write to the file
-        printWriter = new PrintWriter("/home/bridgeit/workspace/Files/listh" , "UTF-8");
+        printWriter = new PrintWriter("/home/bridgeit/workspace/Files/listhwrite" , "UTF-8");
             for(int i = 0; i < 11; i++)
             {
             list = hashMap.get(i);    //    getting lists
@@ -2147,10 +2300,11 @@ public static void searchHashNumber(HashMap<Integer, OrderedLinkedList<Integer>>
                 //    popping every element and adding to the file
             	Integer str=list.pop(0);
             	System.out.print(str+"\t");
-               printWriter.print(str);
+               printWriter.print(str+"\t");
             }           
         }       
             printWriter.close();
+          
     }
 
     public static void readHashFile(HashMap<Integer, OrderedLinkedList<Integer>> hashMap) throws NumberFormatException, IOException {
@@ -2170,16 +2324,18 @@ public static void searchHashNumber(HashMap<Integer, OrderedLinkedList<Integer>>
                 list.list();
             }
         }
+        display(hashMap);
         
     }
 
-    public static void intializeHash(HashMap<Integer, OrderedLinkedList<Integer>> hashMap) {
+    public static void intializeHash(HashMap<Integer, OrderedLinkedList<Integer>> hashMap)
+    {
         for(int i=0;i<11;i++)
         {
             hashMap.put(i, new OrderedLinkedList<Integer>());
         }
-   
-}
+        
+    }
 
     public static void deckOfCardQueue() {
         String[] suits = {"Clubs", "Diamonds", "Hearts", "Spades"};
@@ -2205,7 +2361,8 @@ public static void searchHashNumber(HashMap<Integer, OrderedLinkedList<Integer>>
             deck[r] = deck[i];
             deck[i] = temp;
         }
-      // print shuffled deck
+     
+        // print shuffled deck
    
         for (int i = 0; i < 4; i++)
         {
@@ -2231,14 +2388,14 @@ public static void searchHashNumber(HashMap<Integer, OrderedLinkedList<Integer>>
         System.out.println("--------------------------------");
       for (String outer[] : array)
        {
-           Arrays.sort(outer);
+          Arrays.sort(outer);
           for (String integer : outer)
            {
-             q.insert(integer+"\t");
-             // System.out.print(integer+"\t");
+        	  q.insert(integer+"\t");
+              System.out.print(integer+"\t");
            }
            q.insert("\n");
-           //System.out.println();
+           System.out.println();
        }
        q.display();
     }   

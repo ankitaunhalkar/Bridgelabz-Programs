@@ -184,7 +184,7 @@ public class OrderedLinkedList<T extends Comparable<T>>{
 	public void list(){
 		MyNode<T> tempCurrent = head;
 		while(tempCurrent != null){
-			System.out.println(tempCurrent.data);
+			System.out.print(tempCurrent.data+",");
 			tempCurrent = tempCurrent.next;
 		}
 		

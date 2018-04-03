@@ -14,7 +14,8 @@ public class PrimeAnagram {
 		int[] out;
 		out=Utility.primeNumbers(n);
 		Utility.display(out);
-		Utility.FindAnagram(out);
+		boolean status=Utility.FindAnagram(out);
+		Utility.displayangaram(status);
 	}
 
 }
