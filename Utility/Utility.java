@@ -1683,13 +1683,18 @@ public static void QueuePrimeAnagram() {
                                 System.out.println("Enter the amount");
                                 int amt= inputInt();
                                 int bal =  Integer.parseInt(obj.get("Balance").toString());
+                                
                                 int price = Integer.parseInt(obj1.get("Price").toString());
+                    
                                 int noShare =  Integer.parseInt(obj.get("ShareCount").toString());
+                                
                                 int stockShare = Integer.parseInt(obj1.get("Count").toString());
                                 int numofshare = amt/price;
+                                
                                 int newbal = bal-amt;
                                 int sharecountcus = noShare+numofshare;
                                 int sharecountstock = stockShare-numofshare;
+                                
                                 obj.remove("Balance");
                                 obj.remove("ShareCount");
                                 obj1.remove("Count");
@@ -1730,7 +1735,7 @@ public static void QueuePrimeAnagram() {
     @SuppressWarnings("unchecked")
     public static void createAcc() throws IOException, ParseException
     {
-        File file = new File("/home/bridgeit/workspace/Files/companyStock.json");
+        File file = new File("/home/bridgeit/workspace/Files/customerShare.json");
         if(file.exists())
         {
             @SuppressWarnings("unused")
@@ -1754,7 +1759,7 @@ public static void QueuePrimeAnagram() {
                     int bal = inputInt();
                     json.put("Name",name);
                     json.put("Balance",bal);
-                    json.put("ShareCount", 100);
+                    json.put("ShareCount",100);
                
                     arr1.add(json);
                       FileWriter fw = new FileWriter(file);
@@ -2153,6 +2158,7 @@ public static void QueuePrimeAnagram() {
        
         System.out.println("Enter the Appointment Date:");
         String date=inputString();
+        
         Iterator<?> iterator=patArray.iterator();
         while(iterator.hasNext())
         {
@@ -2182,6 +2188,16 @@ public static void QueuePrimeAnagram() {
                     			doctor.remove("Count");
                     			doctor.put("Count", dcount);
                     			System.out.println(doctor);
+                    			
+                    			FileWriter appointwrite=fileWrite("/home/bridgeit/workspace/Files/Appointment.json");
+                    	        appointwrite.write(JSONValue.toJSONString(appointArray));
+                    	        appointwrite.flush();
+                    	        appointwrite.close();
+                    	       
+                    	        FileWriter doctorwrite=fileWrite("/home/bridgeit/workspace/Files/Doctor.json");
+                    	        doctorwrite.write(JSONValue.toJSONString(docArray));
+                    	        doctorwrite.flush();
+                    	        doctorwrite.close();
                     		}
                     		else
                     		{
@@ -2196,15 +2212,7 @@ public static void QueuePrimeAnagram() {
                 }
             }
         }
-        FileWriter appointwrite=fileWrite("/home/bridgeit/workspace/Files/Appointment.json");
-        appointwrite.write(JSONValue.toJSONString(appointArray));
-        appointwrite.flush();
-        appointwrite.close();
-       
-        FileWriter doctorwrite=fileWrite("/home/bridgeit/workspace/Files/Doctor.json");
-        doctorwrite.write(JSONValue.toJSONString(docArray));
-        doctorwrite.flush();
-        doctorwrite.close();
+        
         cliniqueManagement();
     }
 
@@ -2262,6 +2270,7 @@ public static void QueuePrimeAnagram() {
     public static void  hashFunction() throws NumberFormatException, IOException
     {
         HashMap<Integer, OrderedLinkedList<Integer>> hashMap= new HashMap<Integer, OrderedLinkedList<Integer>>();
+       
         intializeHash(hashMap);
       
         readHashFile(hashMap);
@@ -2274,6 +2283,7 @@ public static void QueuePrimeAnagram() {
     {   
     	Set<Integer> keys = hashMap.keySet();
     	 System.out.println();
+    	 
         for (Integer key : keys) {
         	OrderedLinkedList<Integer> value=hashMap.get(key);
             System.out.print(key +"-->");
@@ -2314,7 +2324,7 @@ public static void QueuePrimeAnagram() {
                 //    popping every element and adding to the file
             	Integer str=list.pop(0);
             	System.out.print(str+"\t");
-               printWriter.print(str+"\t");
+                printWriter.print(str+"\t");
             }           
         }       
             printWriter.close();

@@ -1,4 +1,4 @@
-package com.bridgelabz.DesginPattern;
+package com.bridgelabz.DesginPattern.CreationalPattern.SingletonPattern;
 
 public class EagerInitializedSingleton {
 
