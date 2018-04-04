@@ -2034,13 +2034,17 @@ public static void QueuePrimeAnagram() {
         String did=inputString();
         System.out.println("Enter doctor specialization:");
         String dspecial=inputString();
-        System.out.println("Enter doctor Availability");
+        System.out.println("Enter doctor Availability time:");
         String davailable=inputString();
+        System.out.println("Enter doctor Availability date:");
+        String date=inputString();
+        
         doctor.put("Name", dname);
         doctor.put("ID", did);
         doctor.put("Specialize",dspecial);
         doctor.put("Available", davailable);
         doctor.put("Count", 0);
+        doctor.put("Date", date);
         docArray.add(doctor);
         System.out.println("Doctor is Added Sucessfully");
        
@@ -2068,7 +2072,7 @@ public static void QueuePrimeAnagram() {
         String mobile=inputString();
         System.out.println("Enter patient age");
         String age=inputString();
-       
+        
         patient.put("Name", pname);
         patient.put("ID", pid);
         patient.put("Mobile", mobile);
@@ -2147,6 +2151,8 @@ public static void QueuePrimeAnagram() {
         System.out.println("Enter Patient ID:");
         String pid=inputString();
        
+        System.out.println("Enter the Appointment Date:");
+        String date=inputString();
         Iterator<?> iterator=patArray.iterator();
         while(iterator.hasNext())
         {
@@ -2161,23 +2167,31 @@ public static void QueuePrimeAnagram() {
                     doctor=(JSONObject) iterator2.next();
                     if(dname.equals(doctor.get("Name")))
                     {
-                        int dcount=Integer.parseInt(doctor.get("Count").toString());
-                        if(dcount<5)
-                        {
-                        appoint.put("PID", pid);
-                        appoint.put("DName", dname);
-                        appointArray.add(appoint);
-                        System.out.println(appoint);
-                       
-                        dcount++;
-                        doctor.remove("Count");
-                        doctor.put("Count", dcount);
-                        System.out.println(doctor);
-                        }
-                        else
-                        {
-                            System.out.println("Doctor is not avaiable! Please AddIn tomorrow");
-                        }
+                    	if(date.equals(doctor.get("Date")))
+                    	{
+                    		int dcount=Integer.parseInt(doctor.get("Count").toString());
+                    		if(dcount<5)
+                    		{
+                    			appoint.put("PID", pid);
+                    			appoint.put("DName", dname);
+                    			appoint.put("ADate", date);
+                    			appointArray.add(appoint);
+                    			System.out.println(appoint);
+                    	   
+                    			dcount++;
+                    			doctor.remove("Count");
+                    			doctor.put("Count", dcount);
+                    			System.out.println(doctor);
+                    		}
+                    		else
+                    		{
+                    			System.out.println("Doctor is not avaiable! Please Add In tomorrow");
+                    		}
+                    	}
+                    	else
+                    	{
+                    		System.out.println("Doctor is not avaliable on this date!");
+                    	}
                     }
                 }
             }
