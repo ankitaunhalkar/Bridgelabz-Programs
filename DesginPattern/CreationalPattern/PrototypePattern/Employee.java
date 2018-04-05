@@ -4,27 +4,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Employee implements Cloneable{
-List<String> emplist;
-public Employee() {
-	emplist=new ArrayList<String>();
-}
-public Employee(List<String> list)
-{
-	this.emplist=list;
-}
-public void load() {
-	emplist.add("Abc");
-	emplist.add("XYX");
-}
-public List<String> getlist() {
-	return emplist;
-}
-public Object clone()  throws CloneNotSupportedException{
-	List<String> temp=new ArrayList<String>();
-	for (String string : temp) {
-		temp.add(string);
-	}
-	return new Employee(temp);
+private List<String> empList;
 	
-}
+	public Employee(){
+		empList = new ArrayList<String>();
+	}
+	
+	public Employee(List<String> list){
+		this.empList=list;
+	}
+	public void loadData(){
+		//read all employees from database and put into the list
+		empList.add("Pankaj");
+		empList.add("Raj");
+		empList.add("David");
+		empList.add("Lisa");
+	}
+	
+	public List<String> getEmpList() {
+		return empList;
+	}
+
+	@Override
+	public Object clone() throws CloneNotSupportedException{
+			List<String> temp = new ArrayList<String>();
+			for(String s : this.getEmpList()){
+				temp.add(s);
+			}
+			return new Employee(temp);
+	}
 }

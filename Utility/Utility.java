@@ -1250,12 +1250,12 @@ public  class Utility {
                     v++;
                 }
             }
-        }//int start=0;
+        }int start=0,end=1;
         for(int i=0;i<10;i++)
-        {    //int s=i*100;
-       
-        //System.out.print((start)+"-"+(s)+" ");
-            //start=s+1;
+        {
+        	end=(i+1)*100;
+        	System.out.print("["+start+"-"+end+"]"); 
+        	start=1+end;
                 for(int j=0;j<30;j++)
                 {   
                     if(a[i][j]>0)
@@ -1540,13 +1540,10 @@ public static void QueuePrimeAnagram() {
         case 1: System.out.println("Creating Account");
                 createAcc();
                 break;
-       
         case 2: System.out.println("You are buying Shares");
-               
                 buyShare();
                 break;
         case 3: System.out.println("You are selling shares");
-               
                 sellShare();
                 break;
         case 4: System.out.println("Print Report");
@@ -1602,14 +1599,21 @@ public static void QueuePrimeAnagram() {
                             int saleprize = count*price;
                             int newbal = bal+saleprize;
                             int sharecountcus = noShare-count;
+                            
                             int sharecountstock = stockShare+count;
+                            if(sharecountcus>0 && noShare>0)
+                            {
                             obj.remove("Balance");
                             obj.remove("ShareCount");
                             obj1.remove("Count");
-                           
                             obj.put("Balance",newbal);
                             obj.put("ShareCount",sharecountcus);
                             obj1.put("Count", sharecountstock);
+                            }
+                            else
+                            {
+                            	System.out.println("No Shares Available");
+                            }
                             Date d = new Date();
                             String date = new SimpleDateFormat("E yyyy.MM.dd 'at' hh:mm:ss a").format(d);
                             System.out.println("Date "+date);
@@ -1738,8 +1742,6 @@ public static void QueuePrimeAnagram() {
         File file = new File("/home/bridgeit/workspace/Files/customerShare.json");
         if(file.exists())
         {
-            @SuppressWarnings("unused")
-            JSONArray arr = new JSONArray();
            
             boolean check= true;
             while (check==true)
@@ -1762,7 +1764,7 @@ public static void QueuePrimeAnagram() {
                     json.put("ShareCount",100);
                
                     arr1.add(json);
-                      FileWriter fw = new FileWriter(file);
+                    FileWriter fw = new FileWriter(file);
                     fw.write(JSONArray.toJSONString(arr1));
                     fw.flush();
                     fw.close();
@@ -1873,8 +1875,10 @@ public static void QueuePrimeAnagram() {
                 System.out.println(obj);
                 array.remove(obj);
                 System.out.println("Address show above is deleted");
+                break;
             }
         }
+        
          FileWriter fw=fileWrite("/home/bridgeit/workspace/Files/AddressBook.json");
          fw.write(JSONValue.toJSONString(array));
          fw.flush();
@@ -1938,9 +1942,9 @@ public static void QueuePrimeAnagram() {
         System.out.println("Enter State:");
         String state=inputString();
         System.out.println("Enter Zip:");
-        int zip=inputInt();
+        String zip=inputString();
         System.out.println("Enter Phone Number:");
-        int phone=inputInt();
+        String phone=inputString();
        
          person.put("Firstname", firstname);
          person.put("Lastname", lastname);
@@ -1965,7 +1969,7 @@ public static void QueuePrimeAnagram() {
         System.out.println("Welcome to Clinique Management");
         System.out.println("Press the number, you would like to choose!");
         System.out.println("1.Add Doctor\n2.Add Patient\n3.Search Doctor\n4.Search Patient\n5.Book Appointment" +
-                "\n6.Show Patient\n7.Show Doctor\n8.Show Appointment\n");
+                "\n6.Show Patient\n7.Show Doctor\n8.Show Appointment\n9.Exit\n");
         int choice=inputInt();
         switch (choice) {
         case 1: addDoctor();
@@ -1984,7 +1988,7 @@ public static void QueuePrimeAnagram() {
                 break;
         case 8: showAppointment();
                 break;
-        default:
+        case 9: 
             break;
         }
     }
@@ -2227,8 +2231,10 @@ public static void QueuePrimeAnagram() {
         String[] deck = new String[n];
         for (int i = 0; i < ranks.length; i++)
         {
+        	
             for (int j = 0; j < suits.length; j++)
             {
+            	
                 deck[suits.length*i + j] = ranks[i] + "->" + suits[j];
             }
         }
@@ -2237,7 +2243,7 @@ public static void QueuePrimeAnagram() {
         for (int i = 0; i < n; i++)
         {
             int r = i + (int) (Math.random() * (n-i));
-            System.out.println(r);
+            //System.out.println(r);
             String temp = deck[r];
             deck[r] = deck[i];
             deck[i] = temp;
@@ -2246,27 +2252,26 @@ public static void QueuePrimeAnagram() {
    
         for (int i = 0; i < 4; i++)
         {
-            for (int j = 0; j < 9; j++)
+            for (int j = 0; j <9; j++)
             {
                 array[i][j]=(deck[i + j * 4]);
             }
         }
        
         for(int i=0;i<array.length;i++)
-        {
+        {System.out.println("Player:"+(i+1));
             for(int j=0;j<array[i].length;j++)
             {
                 System.out.print(array[i][j]+"\t");
             }
             System.out.println();
         }
-       /* Arrays.sort(deck);
-       for (String string : deck) {
-		System.out.println(string);
-	}*/
-  
-    }
+	}
+   
 
+        
+
+		
     public static void  hashFunction() throws NumberFormatException, IOException
     {
         HashMap<Integer, OrderedLinkedList<Integer>> hashMap= new HashMap<Integer, OrderedLinkedList<Integer>>();
@@ -2399,28 +2404,35 @@ public static void QueuePrimeAnagram() {
             q.insert("\n");
         }
         q.display();
-      /*  for(int i=0;i<array.length;i++)
+        SortDeck(array,q);
+    }  
+    public static void SortDeck(String [][]array,QueueLinkList q) {
+
+		char[] rank = { 'A', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'J', 'Q', 'K' };
+		String[] cards=new String[51];
+		for (int i = 0; i < 4; i++)
         {
-            for(int j=0;j<array[i].length;j++)
+            for (int j = 0; j < 9; j++)
             {
-                //System.out.print(array[i][j]+"\t");
-               
+                cards[j]=array[i][j];
+               // System.out.print(cards[j]);
+              
             }
-            System.out.println();
-        }*/
-   
-        System.out.println("--------------------------------");
-      for (String outer[] : array)
-       {
-          Arrays.sort(outer);
-          for (String integer : outer)
-           {
-        	  q.insert(integer+"\t");
-              System.out.print(integer+"\t");
-           }
-           q.insert("\n");
-           System.out.println();
-       }
-       q.display();
-    }   
+        }
+		String card;
+			for (int i = 0; i < rank.length; i++) 
+			{
+			for (int j = 0; j < cards.length; j++) 
+			{
+				card = cards[j];
+				//System.out.print(card);
+				char cardRank = card.charAt(card.lastIndexOf(card));
+				if (cardRank == rank[i]){
+					q.insert(card+"\t");
+				}
+			}
+			q.insert("\n");
+		}
+			q.display();
+	}
 }

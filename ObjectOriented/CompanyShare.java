@@ -14,7 +14,7 @@ import com.bridgelabz.Utility.QueueLinkList;
 import com.bridgelabz.Utility.StackLinkList;
 import com.bridgelabz.Utility.Utility;
 
-public class CustomerShare {
+public class CompanyShare {
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws IOException, Exception
 	{
@@ -91,13 +91,14 @@ public class CustomerShare {
 				obj.put(symbol,object);
 				ll.add(obj);
 				ll.display();
-				//System.out.println("Added successfully");
+				System.out.println("Added successfully");
 				
 				stk.insert(symbol);
 				stk.display();
 				
 				que.insert(symbol);
 				que.display();
+				
 				FileWriter fw = new FileWriter(file);
 				fw.write(JSONValue.toJSONString(array));
 				fw.flush();
