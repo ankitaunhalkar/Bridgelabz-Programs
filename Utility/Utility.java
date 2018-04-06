@@ -1420,22 +1420,19 @@ public static void QueuePrimeAnagram() {
                   weekdayIn.insert("\t");
                  
             }
-            weekdayIn.display();
-           for(int i=0;i<d;i++)
-           {
-               weekdayOut.insert(weekdayIn.delete());
-              
-           }
+           weekdayIn.display();
+          
             for (int i = 1 ; i <=days[month-1] ; i++)
             {
+            	
                 weekdayIn.insert("\t"+i);
                 if (((i + d) % 7 == 0) || (i == days[month-1]))    
                     weekdayIn.insert("\n");
-             }
+            }
+          
            for(int i=1;i<=days[month-1] ; i++)
            {
                weekdayOut.insert(weekdayIn.delete());
-           
            }
             weekdayOut.display();
     }
@@ -2224,7 +2221,7 @@ public static void QueuePrimeAnagram() {
         String[] suits = {"Clubs", "Diamonds", "Hearts", "Spades"};
        
         String[] ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10","Jack", "Queen", "King", "Ace"};
-        String array [][] = new String[4][9];
+        String array [][] = new String[4][13];
        
         // initialize deck
         int n = suits.length * ranks.length;
@@ -2243,7 +2240,8 @@ public static void QueuePrimeAnagram() {
         for (int i = 0; i < n; i++)
         {
             int r = i + (int) (Math.random() * (n-i));
-            //System.out.println(r);
+           
+            System.out.println(r);
             String temp = deck[r];
             deck[r] = deck[i];
             deck[i] = temp;

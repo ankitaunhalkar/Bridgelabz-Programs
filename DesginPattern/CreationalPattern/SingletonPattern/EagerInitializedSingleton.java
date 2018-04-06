@@ -16,8 +16,5 @@ public class EagerInitializedSingleton {
 	{
 		return instance;
 	}
-	/*public static void main(String[] args) {
-		EagerInitializedSingleton st=new EagerInitializedSingleton();
-		
-	}*/
+	
 }
