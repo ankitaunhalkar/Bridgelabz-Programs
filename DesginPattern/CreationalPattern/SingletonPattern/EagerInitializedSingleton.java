@@ -5,16 +5,20 @@ public class EagerInitializedSingleton {
 	/**
 	 * @param args
 	 */
-	public static final EagerInitializedSingleton instance = new EagerInitializedSingleton();
+	private static final EagerInitializedSingleton instance = new EagerInitializedSingleton();
 	
 	private EagerInitializedSingleton()
 	{
-		//System.out.println("dcbjb");
+		
 	}
 	
 	public static EagerInitializedSingleton getInstance() 
 	{
+		System.out.println("Sending instance");
 		return instance;
 	}
 	
+	public void print() {
+		System.out.println("hello");
+	}
 }

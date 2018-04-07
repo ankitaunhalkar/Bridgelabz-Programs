@@ -13,6 +13,7 @@ public class ReflectiontoSingletonTest {
             Constructor[] constructors = EagerInitializedSingleton.class.getDeclaredConstructors();
             for (Constructor constructor : constructors) {
                 //Below code will destroy the singleton pattern
+            	
                 constructor.setAccessible(true);
                 instanceTwo = (EagerInitializedSingleton) constructor.newInstance();
                 break;

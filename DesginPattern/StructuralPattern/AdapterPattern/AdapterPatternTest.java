@@ -17,6 +17,7 @@ public class AdapterPatternTest {
 		Volts v3 = getVolts(sockAdapter,3);
 		Volts v12 = getVolts(sockAdapter,12);
 		Volts v120 = getVolts(sockAdapter,120);
+	
 		System.out.println("v3 volts using Object Adapter="+v3.getVolts());
 		System.out.println("v12 volts using Object Adapter="+v12.getVolts());
 		System.out.println("v120 volts using Object Adapter="+v120.getVolts());

@@ -14,7 +14,8 @@ public class SocketObjectAdapterImp extends Socket implements SocketAdapter {
 
 	public Volts get3Volt() {
 		
-		return sock.getVolts();
+		Volts v= sock.getVolts();
+		return convertVolt(v,40);
 	}
 	private Volts convertVolt(Volts v, int i) {
 		return new Volts(v.getVolts()/i);

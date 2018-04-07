@@ -1839,6 +1839,7 @@ public static void QueuePrimeAnagram() {
         System.out.println("Enter the attribute name through which you want sort:");
        String attribute=inputString();
        
+   
        Collections.sort(array,new Sort(attribute));
 		Iterator<?> itr=array.iterator(); 
 		while (itr.hasNext())

@@ -12,19 +12,19 @@ public class PersonalComputer extends Computer{
 	}
 	@Override
 	public String getRAM() {
-		// TODO Auto-generated method stub
+	
 		return ram;
 	}
 
 	@Override
 	public String getHDD() {
-		// TODO Auto-generated method stub
+		
 		return hdd;
 	}
 
 	@Override
 	public String getCPU() {
-		// TODO Auto-generated method stub
+		
 		return cpu;
 	}
 }

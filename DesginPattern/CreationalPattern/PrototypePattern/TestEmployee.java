@@ -17,6 +17,7 @@ public class TestEmployee {
 		//Use the clone method to get the Employee object
 		Employee empsNew = (Employee) emps.clone();
 		Employee empsNew1 = (Employee) emps.clone();
+		
 		List<String> list = empsNew.getEmpList();
 		list.add("John");
 		List<String> list1 = empsNew1.getEmpList();

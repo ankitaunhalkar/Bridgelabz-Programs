@@ -24,9 +24,12 @@ public class sample {
 		EnumSingleton s2=EnumSingleton.INSTANCE;
 		s2.setValue(new sample());
 		s2.doSomething();*/
-		EnumSingleton service = EnumSingleton.INSTANCE;
-		//service.doSomething();
-		System.out.println(service.add(5, 10));;
+	//	EnumSingleton service = EnumSingleton.INSTANCE;
+	//	//service.doSomething();
+	//	System.out.println(service.add(5, 10));
+		//Eager
+		EagerInitializedSingleton s=EagerInitializedSingleton.getInstance();
+		s.print();
 	}
 
 }
