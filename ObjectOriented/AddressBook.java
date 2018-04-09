@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.json.simple.parser.ParseException;
 
-import com.bridgelabz.Utility.Utility;
+import com.bridgelabz.utility.Utility;
 
 public class AddressBook {
 

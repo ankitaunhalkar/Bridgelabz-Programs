@@ -1,4 +1,4 @@
-package com.bridgelabz.Utility;
+package com.bridgelabz.utility;
 
 
 public class OrderedLinkedList<T extends Comparable<T>>{

@@ -1,6 +1,6 @@
 package com.bridgelabz.Functional;
 
-import com.bridgelabz.Utility.Utility;
+import com.bridgelabz.utility.Utility;
 
 public class Windmill {
 

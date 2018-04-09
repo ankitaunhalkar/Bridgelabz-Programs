@@ -2,7 +2,7 @@ package com.bridgelabz.DataStructures;
 
 import java.io.IOException;
 
-import com.bridgelabz.Utility.Utility;
+import com.bridgelabz.utility.Utility;
 
 public class HashingFunction {
 

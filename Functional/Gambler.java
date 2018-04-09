@@ -1,6 +1,6 @@
 package com.bridgelabz.Functional;
 
-import com.bridgelabz.Utility.Utility;
+import com.bridgelabz.utility.Utility;
 
 public class Gambler {
 	/*Desc -> Simulates a gambler who start with $stake and place fair $1 bets 

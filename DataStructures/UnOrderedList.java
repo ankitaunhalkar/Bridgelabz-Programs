@@ -2,8 +2,8 @@ package com.bridgelabz.DataStructures;
 
 
 
-import com.bridgelabz.Utility.LinkedList;
-import com.bridgelabz.Utility.Utility;
+import com.bridgelabz.utility.LinkedList;
+import com.bridgelabz.utility.Utility;
 
 public class UnOrderedList {
 

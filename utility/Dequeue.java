@@ -1,4 +1,4 @@
-package com.bridgelabz.Utility;
+package com.bridgelabz.utility;
 
 public class Dequeue {
 	int size;

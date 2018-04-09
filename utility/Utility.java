@@ -1,4 +1,4 @@
-package com.bridgelabz.Utility;
+package com.bridgelabz.utility;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -24,8 +24,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import com.bridgelabz.Utility.LinkedList.Node;
-import com.bridgelabz.Utility.OrderedLinkedList.MyNode;
+
+import com.bridgelabz.utility.LinkedList.Node;
+import com.bridgelabz.utility.OrderedLinkedList.MyNode;
 
 public  class Utility {
     static Scanner s;

@@ -1,6 +1,6 @@
 package com.bridgelabz.DataStructures;
 
-import com.bridgelabz.Utility.Utility;
+import com.bridgelabz.utility.Utility;
 
 public class BinaryTreeSearch {
 

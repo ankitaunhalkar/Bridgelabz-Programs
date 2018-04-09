@@ -9,10 +9,11 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
-import com.bridgelabz.Utility.LinkedList;
-import com.bridgelabz.Utility.QueueLinkList;
-import com.bridgelabz.Utility.StackLinkList;
-import com.bridgelabz.Utility.Utility;
+
+import com.bridgelabz.utility.LinkedList;
+import com.bridgelabz.utility.QueueLinkList;
+import com.bridgelabz.utility.StackLinkList;
+import com.bridgelabz.utility.Utility;
 
 public class CompanyShare {
 	@SuppressWarnings("unchecked")

@@ -1,4 +1,4 @@
-package com.bridgelabz.Utility;
+package com.bridgelabz.utility;
 
 public class StackLinkList {
 Node3 top=null;

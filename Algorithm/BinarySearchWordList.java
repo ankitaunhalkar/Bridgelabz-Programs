@@ -5,7 +5,7 @@ import java.io.FileReader;
 
 
 
-import com.bridgelabz.Utility.Utility;
+import com.bridgelabz.utility.Utility;
 
 public class BinarySearchWordList {
 

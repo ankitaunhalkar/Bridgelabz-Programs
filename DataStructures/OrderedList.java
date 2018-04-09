@@ -1,7 +1,7 @@
 package com.bridgelabz.DataStructures;
 
-import com.bridgelabz.Utility.OrderedLinkedList;
-import com.bridgelabz.Utility.Utility;
+import com.bridgelabz.utility.OrderedLinkedList;
+import com.bridgelabz.utility.Utility;
 
 public class OrderedList {
 
