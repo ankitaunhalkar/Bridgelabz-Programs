@@ -5,6 +5,9 @@ public class Appointment {
 	private Doctor doctor;
 	private String appointdate;
 	
+	public Appointment() {
+		// TODO Auto-generated constructor stub
+	}
 	public Patient getPatient() {
 		return patient;
 	}

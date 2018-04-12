@@ -7,12 +7,10 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Scanner;
 
-import org.json.simple.parser.JSONParser;
-
 public class AddressBook implements AddressBookInterface{
 	Scanner s = new Scanner(System.in);
 	ArrayList<Person> list = new ArrayList<Person>();
-	JSONParser parser = new JSONParser();
+	
 
 	public void operation(ArrayList<Person> arrayRead) {
 		// list=AddressManager.listReturn();
@@ -21,7 +19,7 @@ public class AddressBook implements AddressBookInterface{
 		do {
 			System.out.println("Choose Operation you want to do");
 			System.out
-					.println("1. Add\t2. Edit\t3. SortById\t4. SortByZip\t5. Back");
+					.println("1. Add\t2. Edit\t3. SortById\t4. SortByZip\t5. Show\t6. Back");
 			switch (s.nextInt()) {
 			case 1:
 				add();
@@ -36,6 +34,9 @@ public class AddressBook implements AddressBookInterface{
 				sortByZip();
 				break;
 			case 5:
+				print();
+				break;
+			case 6:
 				status = false;
 				break;
 			}
@@ -161,15 +162,9 @@ public class AddressBook implements AddressBookInterface{
 				Address address2 = s2.getAddress();
 				int zip1 = (int) address1.getZip();
 				int zip2 = (int) address2.getZip();
-				/* For ascending order */
 				return zip1 - zip2;
 			}
 		};
 	}
-	/*
-	 * public static void main(String[] args) { AddressBook ab=new
-	 * AddressBook(); ab.operation();
-	 * 
-	 * ab.print(); }
-	 */
+
 }

@@ -6,6 +6,9 @@ public class Patient {
 	private long mobileNumber;
 	private int age;
 
+	public Patient() {
+		// TODO Auto-generated constructor stub
+	}
 	public String getPname() {
 		return pname;
 	}

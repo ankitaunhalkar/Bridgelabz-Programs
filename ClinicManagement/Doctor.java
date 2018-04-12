@@ -5,6 +5,19 @@ public class Doctor {
 	private String dname;
 	private String specialist;
 	private String availability;
+	private int doctorId;
+
+	public Doctor() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public int getDoctorId() {
+		return doctorId;
+	}
+
+	public void setDoctorId(int doctorId) {
+		this.doctorId = doctorId;
+	}
 
 	public String getDname() {
 		return dname;
