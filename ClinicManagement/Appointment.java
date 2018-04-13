@@ -2,12 +2,21 @@ package com.bridgelabz.ClinicManagement;
 
 public class Appointment {
 	private Patient patient;
-	private Doctor doctor;
-	private String appointdate;
+	private int DoctorID;
+	private String appointtime;
+
+	public int getDoctorID() {
+		return DoctorID;
+	}
+
+	public void setDoctorID(int doctorID) {
+		DoctorID = doctorID;
+	}
 	
 	public Appointment() {
 		// TODO Auto-generated constructor stub
 	}
+
 	public Patient getPatient() {
 		return patient;
 	}
@@ -16,19 +25,12 @@ public class Appointment {
 		this.patient = patient;
 	}
 
-	public Doctor getDoctor() {
-		return doctor;
+	public String getAppointtime() {
+		return appointtime;
 	}
 
-	public void setDoctor(Doctor doctor) {
-		this.doctor = doctor;
+	public void setAppointtime(String appointtime) {
+		this.appointtime = appointtime;
 	}
 
-	public String getAppointdate() {
-		return appointdate;
-	}
-
-	public void setAppointdate(String appointdate) {
-		this.appointdate = appointdate;
-	}
 }

@@ -29,49 +29,52 @@ import com.bridgelabz.utility.LinkedList.Node;
 import com.bridgelabz.utility.OrderedLinkedList.MyNode;
 
 public  class Utility {
-    static Scanner s;
+    static Scanner scanner=new Scanner(System.in);;
 
 //Default Constructor to Creating object of scanner
-    public Utility()
-    {
-        s=new Scanner(System.in);
-    }
+
 
 // To return String Input
     public static String inputString()
     {
-            return s.next();
+            return scanner.next();
     }
     
  
 //To return String Input Line
     public static String inputStringLine()
     {
-            return s.nextLine();
+            return scanner.nextLine();
     }
 
 //To return String Input
     public static long inputlong()
     {
-            return s.nextLong();
+            return scanner.nextLong();
     }
 //To return Integer input
     public static int inputInt()
     {
-            return s.nextInt();
+            try {
+            	return scanner.nextInt();
+			} catch (Exception e) {
+				scanner.nextLine();
+				System.out.println("Invalid input, try again.");
+				return inputInt();
+			}
        
     }
 
 //To return Double input
     public static double inputDouble()
     {
-            return s.nextDouble();
+            return scanner.nextDouble();
        
     }
 //To return Boolean input;
     public static boolean inputBoolean()
     {
-    return s.nextBoolean();   
+    return scanner.nextBoolean();   
     }
 
 //To accept Array of int
@@ -80,7 +83,7 @@ public  class Utility {
         Integer[] a = new Integer[n];
         for(int i=0;i<n;i++)
         {
-            a[i]=s.nextInt();
+            a[i]=scanner.nextInt();
         }
         return a;
     }
@@ -90,7 +93,7 @@ public  class Utility {
         String a[] = new String[n];
         for(int i=0;i<n;i++)
         {
-            a[i]=s.next();
+            a[i]=scanner.next();
         }
         return a;
     }
@@ -300,7 +303,7 @@ public  class Utility {
                 {
                     for(int j=0;j<n;j++)
                     {
-                        intt[i][j]=s.nextInt();
+                        intt[i][j]=scanner.nextInt();
                     }
                 }
                
@@ -314,7 +317,7 @@ public  class Utility {
                 {
                     for(int j=0;j<n;j++)
                     {
-                        doub[i][j]=s.nextDouble();
+                        doub[i][j]=scanner.nextDouble();
                     }
                 }
                  ArrayPrint(doub);
@@ -327,7 +330,7 @@ public  class Utility {
                 {
                     for(int j=0;j<n;j++)
                     {
-                        boo[i][j]=s.nextBoolean();
+                        boo[i][j]=scanner.nextBoolean();
                     }
                 }
                  ArrayPrint(boo);

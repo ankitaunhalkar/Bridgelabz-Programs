@@ -1,30 +1,28 @@
 package com.bridgelabz.ClinicManagement;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Scanner;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
 
+import java.util.ArrayList;
+
+import java.util.Iterator;
+
+import java.util.List;
+
+import com.bridgelabz.utility.Utility;
 
 public class AddToClinic implements AddToClinicInterface {
-	Scanner s = new Scanner(System.in);
-	static List<Patient> patientList;
-	static List<Doctor> doctorList;
-	static List<Appointment> apList;
+
+	private List<Patient> patientList;
+	private List<Doctor> doctorList;
+	private List<Appointment> apList;
+
 	@Override
 	public void addChoices() {
 
 		boolean status = true;
 		do {
 			System.out.println("1.Add Appointment\t2.Add Doctor\t3.Back");
-			switch (s.nextInt()) {
+			switch (Utility.inputInt()) {
 			case 1:
 				addAppointment();
 				break;
@@ -43,57 +41,75 @@ public class AddToClinic implements AddToClinicInterface {
 	public Patient addPatient() {
 		File file = new File(
 				"/home/bridgeit/workspace/Ankita/Ankita/ClinicFiles/Patient.json");
+		patientList = new ArrayList<Patient>();
+		patientList = ClinicUtil.readFile(file, Patient[].class);
 		Patient patient = new Patient();
+		patient.setId(patientList.size() + 1);
 		System.out.println("Enter Patient's Name:");
-		patient.setPname(s.next());
+		patient.setPname(Utility.inputString());
 		System.out.println("Enter Patient's Mobile Number:");
-		patient.setMobileNumber(s.nextLong());
+		patient.setMobileNumber(Utility.inputlong());
 		System.out.println("Enter Patient's Age:");
-		patient.setAge(s.nextInt());
+		patient.setAge(Utility.inputInt());
 		patientList.add(patient);
-		writeFile(file, patientList);
+		System.out.println(patient);
+		ClinicUtil.writeFile(file, patientList);
 		return patient;
 	}
 
 	@Override
 	public void addAppointment() {
-		File file = new File(
+		File apfile = new File(
 				"/home/bridgeit/workspace/Ankita/Ankita/ClinicFiles/Appointment.json");
 		File docfile = new File(
 				"/home/bridgeit/workspace/Ankita/Ankita/ClinicFiles/Doctor.json");
 
-		doctorList=readFile(docfile,Doctor.class);
-		apList=readFile(file,Appointment.class);
-		System.out.println(doctorList);
-		System.out.println(apList);
-		Appointment appointment = new Appointment();
-		Doctor doctor = null;
+		doctorList = new ArrayList<Doctor>();
+		apList = new ArrayList<Appointment>();
+
+		doctorList = ClinicUtil.readFile(docfile, Doctor[].class);
+		apList = ClinicUtil.readFile(apfile, Appointment[].class);
+
 		System.out.println("Enter Doctors ID to appoint:");
-		int docId = s.nextInt();
-	
+		int docId = Utility.inputInt();
+		System.out.println("Enter Time(AM/PM) to Book Appointment:");
+		String appointtime = Utility.inputString();
 		Iterator<Doctor> iterator = doctorList.iterator();
-	
-	while (iterator.hasNext()) {
-			doctor=iterator.next();
-			if (docId == doctor.getDoctorId()) {
-				System.out.println("Enter Patients details");
-				appointment.setPatient(addPatient());
-				appointment.setDoctor(doctor);
-			
+
+		while (iterator.hasNext()) {
+			Doctor doctor = iterator.next();
+			Appointment appointment = new Appointment();
+			if (docId == doctor.getDoctorId()
+					&& appointtime.equals(doctor.getAvailability())) {
+
+				if (doctor.getPatientCount() == 0) {
+					doctor.setPatientCount(1);
+					System.out.println("Enter Patients details");
+					appointment.setPatient(addPatient());
+					appointment.setDoctorID(doctor.getDoctorId());
+					appointment.setAppointtime(appointtime);
+					System.out.println(appointment);
+					apList.add(appointment);
+					break;
+				} else if (doctor.getPatientCount() > 0
+						&& doctor.getPatientCount() <= 5) {
+					doctor.setPatientCount(doctor.getDoctorId() + 1);
+					System.out.println("Enter Patients details");
+					appointment.setPatient(addPatient());
+					appointment.setDoctorID(doctor.getDoctorId());
+					appointment.setAppointtime(appointtime);
+					System.out.println(appointment);
+					apList.add(appointment);
+					break;
+				} else {
+					System.out.println("Please come next time! ");
+				}
+			} else {
+				System.out.println("No Doctor Available");
 				break;
 			}
-			else
-			{
-				System.out.println("No doctor found");
-			}
 		}
-	
-
-		System.out.println("Enter Date to Book Appointment:");
-		appointment.setAppointdate(s.next());
-
-		apList.add(appointment);
-		writeFile(file, apList);
+		ClinicUtil.writeFile(apfile, apList);
 	}
 
 	@Override
@@ -101,57 +117,16 @@ public class AddToClinic implements AddToClinicInterface {
 		File file = new File(
 				"/home/bridgeit/workspace/Ankita/Ankita/ClinicFiles/Doctor.json");
 		Doctor doctor = new Doctor();
-		doctorList = readFile(file,Doctor.class);
+		doctorList = ClinicUtil.readFile(file, Doctor[].class);
 		System.out.println("Enter Doctor's Name:");
-		doctor.setDname(s.next());
-		doctor.setDoctorId(doctorList.size()+1);
-		System.out.println("Enter Doctor's Availability:");
-		doctor.setAvailability(s.next());
+		doctor.setDname(Utility.inputString());
+		doctor.setDoctorId(doctorList.size() + 1);
+		System.out.println("Enter Doctor's Availability:(AM/PM/Both)");
+		doctor.setAvailability(Utility.inputString());
 		System.out.println("Enter Doctor's Specialization:");
-		doctor.setSpecialist(s.next());
+		doctor.setSpecialist(Utility.inputString());
 		doctorList.add(doctor);
-		writeFile(file, doctorList);
-	}
-
-	public <T> void writeFile(File file, List<T> doctorList2) {
-		ObjectMapper objectMapper = new ObjectMapper();
-		try {
-			objectMapper.writeValue(file, doctorList2);
-			System.out.println("SuccessFully Added");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public <T> List<T> readFile(File file,Class<T> clazz) {
-		ObjectMapper objectMapper = new ObjectMapper();
-		ArrayList<T> arraylist = new ArrayList<T>();
-		List<T> list = null;
-		System.out.println(file);
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader(file));
-			String jsonToArray;
-			if ((jsonToArray = reader.readLine()) != null) {
-				System.out.println(jsonToArray);
-			/*	TypeReference<ArrayList<T>> type = new TypeReference<ArrayList<T>>() {
-				};
-				arraylist = objectMapper.readValue(jsonToArray, type);*/
-				//arraylist = new ArrayList<T>((Integer) objectMapper.readValue(file, clazz));
-				list=new ArrayList<T>(Arrays.asList(objectMapper.readValue(file, clazz)));
-				System.out.println(arraylist);
-			}
-			reader.close();
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		}
-		return list;
-
-	}
-
-	public static void main(String[] args) {
-		AddToClinic a = new AddToClinic();
-		a.addChoices();
+		ClinicUtil.writeFile(file, doctorList);
 	}
 
 }

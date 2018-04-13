@@ -6,6 +6,15 @@ public class Doctor {
 	private String specialist;
 	private String availability;
 	private int doctorId;
+	private int patientCount;
+
+	public int getPatientCount() {
+		return patientCount;
+	}
+
+	public void setPatientCount(int patientCount) {
+		this.patientCount = patientCount;
+	}
 
 	public Doctor() {
 		// TODO Auto-generated constructor stub

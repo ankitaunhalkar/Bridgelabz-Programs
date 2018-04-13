@@ -5,10 +5,12 @@ public class Patient {
 	private String pname;
 	private long mobileNumber;
 	private int age;
+	private int id;
 
 	public Patient() {
 		// TODO Auto-generated constructor stub
 	}
+
 	public String getPname() {
 		return pname;
 	}
@@ -23,6 +25,14 @@ public class Patient {
 
 	public void setMobileNumber(long mobileNumber) {
 		this.mobileNumber = mobileNumber;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getAge() {
