@@ -1,4 +1,4 @@
-package com.bridgelabz.ClinicManagement;
+package com.bridgelabz.ClinicManagementSystem;
 
 public class Patient {
 	// Name, ID, Mobile Number and Age

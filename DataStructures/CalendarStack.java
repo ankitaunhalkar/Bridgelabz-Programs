@@ -13,7 +13,7 @@ public class CalendarStack {
 		int month=Utility.inputInt();
 		System.out.println("Enter the Year:");
 		int year=Utility.inputInt();
-		Utility.CalendarStack(month, year);
+		Utility.calendarStack(month, year);
 	}
 
 }

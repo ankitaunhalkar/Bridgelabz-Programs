@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.bridgelabz.ClinicManagementSystem.ClinicUtil;
+import com.bridgelabz.ClinicManagementSystem.Doctor;
+import com.bridgelabz.ClinicManagementSystem.Patient;
 import com.bridgelabz.utility.Utility;
 
 public class SearchInClinic implements SearchInClinicInterface {

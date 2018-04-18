@@ -97,7 +97,7 @@ public class CompanyShare {
 				stk.insert(symbol);
 				stk.display();
 				
-				que.insert(symbol);
+				que.insert(obj);
 				que.display();
 				
 				FileWriter fw = new FileWriter(file);

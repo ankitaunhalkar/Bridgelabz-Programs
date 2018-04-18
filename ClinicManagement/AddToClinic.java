@@ -8,6 +8,10 @@ import java.util.Iterator;
 
 import java.util.List;
 
+import com.bridgelabz.ClinicManagementSystem.Appointment;
+import com.bridgelabz.ClinicManagementSystem.ClinicUtil;
+import com.bridgelabz.ClinicManagementSystem.Doctor;
+import com.bridgelabz.ClinicManagementSystem.Patient;
 import com.bridgelabz.utility.Utility;
 
 public class AddToClinic implements AddToClinicInterface {
@@ -43,17 +47,21 @@ public class AddToClinic implements AddToClinicInterface {
 				"/home/bridgeit/workspace/Ankita/Ankita/ClinicFiles/Patient.json");
 		patientList = new ArrayList<Patient>();
 		patientList = ClinicUtil.readFile(file, Patient[].class);
+
 		Patient patient = new Patient();
 		patient.setId(patientList.size() + 1);
+
 		System.out.println("Enter Patient's Name:");
 		patient.setPname(Utility.inputString());
 		System.out.println("Enter Patient's Mobile Number:");
 		patient.setMobileNumber(Utility.inputlong());
 		System.out.println("Enter Patient's Age:");
 		patient.setAge(Utility.inputInt());
+
 		patientList.add(patient);
-		System.out.println(patient);
+
 		ClinicUtil.writeFile(file, patientList);
+
 		return patient;
 	}
 
@@ -72,8 +80,10 @@ public class AddToClinic implements AddToClinicInterface {
 
 		System.out.println("Enter Doctors ID to appoint:");
 		int docId = Utility.inputInt();
+
 		System.out.println("Enter Time(AM/PM) to Book Appointment:");
 		String appointtime = Utility.inputString();
+
 		Iterator<Doctor> iterator = doctorList.iterator();
 
 		while (iterator.hasNext()) {
@@ -82,34 +92,30 @@ public class AddToClinic implements AddToClinicInterface {
 			if (docId == doctor.getDoctorId()
 					&& appointtime.equals(doctor.getAvailability())) {
 
-				if (doctor.getPatientCount() == 0) {
-					doctor.setPatientCount(1);
-					System.out.println("Enter Patients details");
-					appointment.setPatient(addPatient());
-					appointment.setDoctorID(doctor.getDoctorId());
-					appointment.setAppointtime(appointtime);
-					System.out.println(appointment);
-					apList.add(appointment);
-					break;
-				} else if (doctor.getPatientCount() > 0
+				if (doctor.getPatientCount() >= 0
 						&& doctor.getPatientCount() <= 5) {
-					doctor.setPatientCount(doctor.getDoctorId() + 1);
+
+					doctor.setPatientCount(doctor.getPatientCount() + 1);
+					
 					System.out.println("Enter Patients details");
 					appointment.setPatient(addPatient());
+					
+					
 					appointment.setDoctorID(doctor.getDoctorId());
 					appointment.setAppointtime(appointtime);
-					System.out.println(appointment);
+					
 					apList.add(appointment);
+					System.out.println("Appointment Fixed");
+					
+					ClinicUtil.writeFile(docfile, doctorList);
+					ClinicUtil.writeFile(apfile, apList);
 					break;
 				} else {
 					System.out.println("Please come next time! ");
 				}
-			} else {
-				System.out.println("No Doctor Available");
-				break;
 			}
 		}
-		ClinicUtil.writeFile(apfile, apList);
+
 	}
 
 	@Override

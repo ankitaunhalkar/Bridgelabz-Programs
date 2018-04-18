@@ -1,5 +1,7 @@
 package com.bridgelabz.ClinicManagement;
 
+import com.bridgelabz.ClinicManagementSystem.Patient;
+
 public interface AddToClinicInterface {
 	public void addChoices();
 

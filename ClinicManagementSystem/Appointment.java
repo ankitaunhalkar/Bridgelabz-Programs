@@ -1,4 +1,5 @@
-package com.bridgelabz.ClinicManagement;
+package com.bridgelabz.ClinicManagementSystem;
+
 
 public class Appointment {
 	private Patient patient;

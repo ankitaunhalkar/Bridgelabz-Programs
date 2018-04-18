@@ -4,7 +4,8 @@ public class Person {
 	private String fname;
 	private String lname;
 	private long phonenumber;
-
+	private Address address;
+	
 	public long getPhonenumber() {
 		return phonenumber;
 	}
@@ -12,8 +13,6 @@ public class Person {
 	public void setPhonenumber(long phonenumber) {
 		this.phonenumber = phonenumber;
 	}
-
-	private Address address;
 
 	public String getFname() {
 		return fname;

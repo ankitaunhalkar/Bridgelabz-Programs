@@ -8,13 +8,18 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
+
+import com.bridgelabz.utility.Utility;
 
 public class AddressManager implements AddressManagerInterface {
 	ObjectMapper objectMapper = new ObjectMapper();
 	AddressBookInterface addressbook=new AddressBook();
-	static ArrayList<Person> arraylist=new ArrayList<Person>();
+	ArrayList<Person> arraylist=new ArrayList<Person>();
 	File file;File newfile;
 	static Scanner s=new Scanner(System.in);
 	
@@ -23,16 +28,18 @@ public class AddressManager implements AddressManagerInterface {
 
 		file = new File(
 				"/home/bridgeit/workspace/Ankita/Ankita/AddressBookFiles/" + ""
-						+ s.next() + ".json");
+						+ Utility.inputString() + ".json");
 		try {
 			if (file.createNewFile()) {
 				System.out.println("Address book is created!");
-
-			} else {
-				System.out.println("Cannot create new Addressbook.");
-			}
+			}else
+				{
+					System.out.println("Cannot create new Addressbook");
+				}
+			
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Cannot create new Addressbook.");
+			create();
 		}
 	}
 	
@@ -41,19 +48,16 @@ public class AddressManager implements AddressManagerInterface {
 		file = new File(
 				"/home/bridgeit/workspace/Ankita/Ankita/AddressBookFiles/" + ""
 						+ s.next() + ".json");
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader(file));
-			String jsonToArray;
-			if ((jsonToArray = reader.readLine()) != null) {
+		
 				TypeReference<ArrayList<Person>> type = new TypeReference<ArrayList<Person>>() {
 				};
-				arraylist = objectMapper.readValue(jsonToArray, type);
-			}
-			reader.close();
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		}
+				try {
+					arraylist = objectMapper.readValue(file, type);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		
 		addressbook.operation(arraylist);
 	}
 	

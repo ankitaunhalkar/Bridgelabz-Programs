@@ -1,4 +1,4 @@
-package com.bridgelabz.ClinicManagement;
+package com.bridgelabz.ClinicManagementSystem;
 
 public class Doctor {
 	// Name, Id, Specialization and Availability (AM, PM or both)
@@ -8,16 +8,16 @@ public class Doctor {
 	private int doctorId;
 	private int patientCount;
 
+	public Doctor() {
+		
+	}
+
 	public int getPatientCount() {
 		return patientCount;
 	}
 
 	public void setPatientCount(int patientCount) {
 		this.patientCount = patientCount;
-	}
-
-	public Doctor() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public int getDoctorId() {

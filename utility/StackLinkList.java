@@ -60,10 +60,21 @@ public static void main(String[] args) {
 	StackLinkList s=new StackLinkList();
 	s.insert(1);
 	s.insert(2);
+	s.insert("*");
+	s.insert("*");
+	s.insert("\n");
+	s.insert("*");
 	s.insert(3);
 	s.display();
-	s.delete();
-	s.display();
+	System.out.println(s.delete());
+	System.out.println(s.delete());
+	System.out.println(s.delete());
+	System.out.println(s.delete());
+	System.out.println(s.delete());
+	System.out.println(s.delete());
+}
+int size(){
+	return size;
 }
 }
 class Node3{

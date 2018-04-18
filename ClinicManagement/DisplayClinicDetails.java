@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.bridgelabz.ClinicManagementSystem.ClinicUtil;
+import com.bridgelabz.ClinicManagementSystem.Doctor;
+import com.bridgelabz.ClinicManagementSystem.Patient;
 import com.bridgelabz.utility.Utility;
 
 public class DisplayClinicDetails implements DisplayClinicDetailsInterface {
@@ -16,12 +19,13 @@ public class DisplayClinicDetails implements DisplayClinicDetailsInterface {
 				"/home/bridgeit/workspace/Ankita/Ankita/ClinicFiles/Patient.json");
 		list = ClinicUtil.readFile(file, Patient[].class);
 		Iterator<Patient> iterator = list.iterator();
+		System.out.println("ID\tName\tMobile Number\tAge");
 		while (iterator.hasNext()) {
 			Patient patient = iterator.next();
-			System.out.println("Patient ID: " + patient.getId()
-					+ " | Patient Name: " + patient.getPname()
-					+ " | Patient Mobile Number: " + patient.getMobileNumber()
-					+ " Patient Age: | " + patient.getAge());
+			System.out.println(patient.getId()
+					+ " \t" + patient.getPname()
+					+ " \t" + patient.getMobileNumber()
+					+ " \t" + patient.getAge());
 		}
 	}
 
@@ -32,12 +36,13 @@ public class DisplayClinicDetails implements DisplayClinicDetailsInterface {
 				"/home/bridgeit/workspace/Ankita/Ankita/ClinicFiles/Doctor.json");
 		list = ClinicUtil.readFile(file, Doctor[].class);
 		Iterator<Doctor> iterator = list.iterator();
+		System.out.println("ID\tName\tSpecialization\tAvailability");
 		while (iterator.hasNext()) {
 			Doctor doctor = iterator.next();
-			System.out.println("Doctor ID: " + doctor.getDoctorId()
-					+ " | Doctor Name: " + doctor.getDname()
-					+ " | Doctor Specialization: " + doctor.getSpecialist()
-					+ " | Doctor Availability: " + doctor.getAvailability());
+			System.out.println(doctor.getDoctorId()
+					+ " \t" + doctor.getDname()
+					+ " \t" + doctor.getSpecialist()
+					+ " \t" + doctor.getAvailability());
 		}
 
 	}

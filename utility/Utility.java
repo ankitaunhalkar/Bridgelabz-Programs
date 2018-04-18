@@ -29,28 +29,45 @@ import com.bridgelabz.utility.LinkedList.Node;
 import com.bridgelabz.utility.OrderedLinkedList.MyNode;
 
 public  class Utility {
-    static Scanner scanner=new Scanner(System.in);;
-
-//Default Constructor to Creating object of scanner
-
+    static Scanner scanner=new Scanner(System.in);
 
 // To return String Input
     public static String inputString()
     {
-            return scanner.next();
+
+        try {
+        	return scanner.next();
+		} catch (Exception e) {
+			scanner.nextLine();
+			System.out.println("Invalid input, try again.");
+			return inputString();
+		}
     }
     
  
 //To return String Input Line
     public static String inputStringLine()
     {
-            return scanner.nextLine();
+
+        try {
+        	return scanner.nextLine();
+		} catch (Exception e) {
+			scanner.nextLine();
+			System.out.println("Invalid input, try again.");
+			return inputStringLine();
+		}
     }
 
-//To return String Input
+//To return Long input
     public static long inputlong()
     {
-            return scanner.nextLong();
+    	 try {
+         	return scanner.nextLong();
+ 		} catch (Exception e) {
+ 			scanner.nextLine();
+ 			System.out.println("Invalid input, try again.");
+ 			return inputlong();
+ 		}
     }
 //To return Integer input
     public static int inputInt()
@@ -68,13 +85,25 @@ public  class Utility {
 //To return Double input
     public static double inputDouble()
     {
-            return scanner.nextDouble();
+    	 try {
+         	return scanner.nextDouble();
+			} catch (Exception e) {
+				scanner.nextLine();
+				System.out.println("Invalid input, try again.");
+				return inputDouble();
+			}
        
     }
 //To return Boolean input;
     public static boolean inputBoolean()
     {
-    return scanner.nextBoolean();   
+    	 try {
+         	return scanner.nextBoolean();
+			} catch (Exception e) {
+				scanner.nextLine();
+				System.out.println("Invalid input, try again.");
+				return inputBoolean();
+			}
     }
 
 //To accept Array of int
@@ -1405,18 +1434,18 @@ public static void QueuePrimeAnagram() {
     }
    
 //Method for Calendar Stack
-    public static void CalendarStack(int month,int year) {
+    public static void calendarStack(int month,int year) {
         StackLinkList weekdayIn=new StackLinkList();
         StackLinkList weekdayOut=new StackLinkList();
-        String[] months = {"January", "February", "March","April", "May", "June",
+        String[] months = {"","January", "February", "March","April", "May", "June",
                 "July", "August", "September","October", "November", "December"};
 
-            int[] days = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+            int[] days = {0,31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
             if ((month == 2) && (isLeapOrNot(year)))
             {
                 days[month] = 29;
             }
-            System.out.println("\t\t\t" + months[month-1] + " " + year);
+            System.out.println("\t\t\t" + months[month] + " " + year);
             System.out.println("\tSun\tMon\tTue\tWed\tThu\tFri\tSat");
             int d = dayOfWeek(month, 1, year);
             for(int i=0;i<d;i++)
@@ -1424,21 +1453,23 @@ public static void QueuePrimeAnagram() {
                   weekdayIn.insert("\t");
                  
             }
-           weekdayIn.display();
+          // weekdayIn.display();
           
-            for (int i = 1 ; i <=days[month-1] ; i++)
+            for (int i = 1 ; i <=days[month] ; i++)
             {
-            	
-                weekdayIn.insert("\t"+i);
-                if (((i + d) % 7 == 0) || (i == days[month-1]))    
-                    weekdayIn.insert("\n");
+                weekdayIn.insert(i);
+             if (((i + d) % 7 == 0) || (i == days[month-1]))    
+            	 weekdayIn.insert("\n");
             }
-          
-           for(int i=1;i<=days[month-1] ; i++)
+        
+           for(int i=1;i<=weekdayIn.size(); i++)
            {
-               weekdayOut.insert(weekdayIn.delete());
+        	   Object value=weekdayIn.delete();
+        	   System.out.println(value);
+               weekdayOut.insert(value);
+             
            }
-            weekdayOut.display();
+           weekdayOut.display();
     }
    
 //Method for Inventory Data Management
